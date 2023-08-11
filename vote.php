@@ -66,7 +66,7 @@ if(isset($_SESSION['Username'])){
   ?>
 
 <?php if(isset($_GET['error'])){?>
-  <div class = "error"><button type = button>CLose</button><?php echo $_GET['error']; ?></div>
+  <div id = "error" onclick="closeDiv('error')"><button type = button>Close</button><?php echo $_GET['error']; ?></div>
 <?php } ?>
 
 <div class="container">
@@ -116,6 +116,10 @@ if(isset($_SESSION['Username'])){
     }
 
     setInterval(getRanking(), 1000);
+
+    function closeDiv(element){
+      document.getElementById(element).style.display = "none";
+    }
   </script>
 
   <?php
