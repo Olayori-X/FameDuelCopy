@@ -53,9 +53,9 @@ if(isset($_SESSION['Username'])){
       $percenttwo = 50;
     }
 
-    if($currentDay === 5 && $currentHour === 0 && $currentMinute = 0 && $currentSecond === 0){
+    if($currentDay == 5 && $currentHour == 0 && $currentMinute == 0 && $currentSecond == 0){
       $clear = "DELETE FROM contestants";
-      $clearquey = mysqli_query($connect, $clear);
+      $clearquery = mysqli_query($connect, $clear);
 
       if($clearquery){
         echo "It's a new day";
