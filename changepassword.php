@@ -59,7 +59,7 @@
         </div>
 
         <footer>
-            &copy; 2023 Login Page. All rights reserved.
+            &copy; 2023 Fame Duel. All rights reserved.
         </footer>
     </body>
 </html>

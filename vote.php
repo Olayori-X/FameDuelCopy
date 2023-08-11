@@ -100,7 +100,7 @@ if(isset($_SESSION['Username'])){
   </div>
 
   <footer>
-    &copy; 2023 Voting Site. All rights reserved.
+    &copy; 2023 Fame Duel. All rights reserved.
   </footer>
 
   <script>

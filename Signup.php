@@ -35,7 +35,7 @@
   </div>
 
   <footer>
-    2023 Sign Up Page. All rights reserved.
+    &copy; 2023 Fame Duel. All rights reserved.
   </footer>
 </body>
 </html>
