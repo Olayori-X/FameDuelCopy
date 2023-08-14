@@ -21,11 +21,7 @@ if(isset($_SESSION['Username'])){
   </header>
 
   <?php
-    $currentDay = date("w");
-    $currentHour = date("H");
-    $currentMinute = date("i");
-    $currentSecond = date("s");
-
+    include "time.php";
     include "connect.php";
 
     $contestantone = "SELECT COUNT(Contestant) as countone FROM contestants WHERE Contestant = 'One'";
