@@ -8,6 +8,7 @@ if(isset($_POST['option'])){
     include 'validate.php';
 
     $value = validate($_POST['option']);
+    $image = $_POST['chosenimage'];
 
     $UserVerification = "SELECT UserName FROM contestants WHERE UserName = '$username'";
     $UserQuery = mysqli_query($connect, $UserVerification);
@@ -19,7 +20,7 @@ if(isset($_POST['option'])){
                 header("Location: vote.php?error=This User has voted");
             }
             else{
-                $vote = "INSERT INTO contestants(Contestant, UserName) VALUES('$value', '$username')";
+                $vote = "INSERT INTO contestants(Contestant,ContestantPic, UserName) VALUES('$value', '$image', '$username')";
                 $votequery = mysqli_query($connect, $vote);
                 
                 if($votequery){
@@ -28,7 +29,7 @@ if(isset($_POST['option'])){
             }
         }
     }else{
-        $vote = "INSERT INTO contestants(Contestant, UserName) VALUES('$value', '$username')";
+        $vote = "INSERT INTO contestants(Contestant,ContestantPic, UserName) VALUES('$value', '$image', '$username')";
         $votequery = mysqli_query($connect, $vote);
         
         if($votequery){

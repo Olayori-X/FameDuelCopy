@@ -10,6 +10,7 @@ if(isset($_SESSION['Username'])){
 <head>
   <title>Voting Site</title>
   <link rel="stylesheet" type="text/css" href="votingsitestyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
   <header>
@@ -50,6 +51,7 @@ if(isset($_SESSION['Username'])){
     }
 
     if($currentDay == 5 && $currentHour == 0 && $currentMinute == 0 && $currentSecond == 0){
+      // if($currentHour == 22){
       $clear = "DELETE FROM contestants";
       $clearquery = mysqli_query($connect, $clear);
 
@@ -58,11 +60,11 @@ if(isset($_SESSION['Username'])){
       }
     }
 
-    if($currentDay >= 5 ){
+    if($currentDay >= 5){
   ?>
 
 <?php if(isset($_GET['error'])){?>
-  <div id = "error" onclick="closeDiv('error')"><button type = button>Close</button><?php echo $_GET['error']; ?></div>
+  <div id = "error" onclick="closeDiv('error')"><?php echo $_GET['error']; ?><button type = button>Close</button></div>
 <?php } ?>
 
 <div class="container">
@@ -71,21 +73,22 @@ if(isset($_SESSION['Username'])){
       <form id="votingForm" action="submit_vote.php" method="post">
         <div class="options">
           <label class="option">
-            <input type="radio" name="option" value="One" onchange="submitForm()">
+            <input type="radio" name="option" value="One" data-img-src="https://source.unsplash.com/random/400x300?sig=4" onchange="submitForm()">
             <div class="vote">
 
 
-              <img src= "https://source.unsplash.com/random/400x300?sig=4" alt="Picture 1">
+              <img src= "https://source.unsplash.com/random/400x300?sig=4" alt="Picture 1"><br>
             </div>
           </label>
           <label class="option">
-            <input type="radio" name="option" value="Two" onchange="submitForm()">
+            <input type="radio" name="option" value="Two" data-img-src="https://source.unsplash.com/random/400x300?sig=2" onchange="submitForm()">
             <div class="vote">
-              <img src="https://source.unsplash.com/random/400x300?sig=2" alt="Picture 2">
+              <img src="cars.j" alt="Picture 2">
             </div>
           </label>
           <!-- Add more picture options as needed -->
         </div>
+        <input type = "hidden" id = "chosenimage" name = "chosenimage">
       </form>
     </main>
   </div>
@@ -101,6 +104,14 @@ if(isset($_SESSION['Username'])){
 
   <script>
     function submitForm() {
+      var radioButtons = document.querySelectorAll('input[name="option"]');
+      for (var i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked) {
+          contestant_image = radioButtons[i].getAttribute('data-img-src');
+          document.getElementById("chosenimage").value = contestant_image;
+          break; // Exit the loop when the selected radio button is found
+        }
+    }
       document.getElementById('votingForm').submit();
     }
 
@@ -121,22 +132,34 @@ if(isset($_SESSION['Username'])){
   <?php
     }else{
       // $max = max($countone, $counttwo);
-      $max = "SELECT Contestant,COUNT(Contestant) AS value_occurence FROM contestants GROUP BY Contestant ORDER BY value_occurence DESC LIMIT 1";
+      $max = "SELECT ContestantPic,COUNT(ContestantPic) AS value_occurence FROM contestants GROUP BY ContestantPic ORDER BY value_occurence DESC LIMIT 1";
       $confirmmax = mysqli_query($connect, $max);
 
       if($confirmmax){
-        while($row = mysqli_fetch_array($confirmmax)){
-          $winner = $row['Contestant'];
+        // echo $confirmmax;
+        $row = mysqli_fetch_array($confirmmax);
+        if(empty($row['ContestantPic'])){
+          echo "No one has voted";
         }
-      }
+        else{
+          $winner = $row['ContestantPic'];
+          // echo $winner;
   ?>
 
   <div id = "nottime">Wait till the speculated time</div>
-  <img src = "<?php echo $winner ?>" alt = "Winner">
+  
+  <div id="winner-container">
+    <img src="<?php echo $winner; ?>" class="winner" alt="Winner">
+  </div>
 
+  
   <?php
-      }
+  echo $winner;
+     }
+   }
+  }
   ?>
+  
 </body>
 </html>
 <?php
