@@ -3,7 +3,6 @@ session_start();
 
 if(isset($_SESSION['Username'])){
   $username = $_SESSION['Username'];
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,6 +13,7 @@ if(isset($_SESSION['Username'])){
 </head>
 <body>
   <header>
+
     <h1>Fame Duel
       <span class = "logout">
         <a href = "logout.php">Log Out</a>
@@ -24,9 +24,10 @@ if(isset($_SESSION['Username'])){
   <?php
     include "time.php";
     include "connect.php";
+    include "contestants.php";
 
-    $contestantone = "SELECT COUNT(Contestant) as countone FROM contestants WHERE Contestant = 'One'";
-    $contestanttwo = "SELECT COUNT(Contestant) as counttwo FROM contestants WHERE Contestant = 'Two'";
+    $contestantone = "SELECT COUNT(Contestant) as countone FROM contestants WHERE Contestant = '$usernames[0]'";
+    $contestanttwo = "SELECT COUNT(Contestant) as counttwo FROM contestants WHERE Contestant = '$usernames[1]'";
 
     $queryone = mysqli_query($connect, $contestantone);
     $querytwo = mysqli_query($connect, $contestanttwo);
@@ -50,16 +51,6 @@ if(isset($_SESSION['Username'])){
       $percenttwo = 50;
     }
 
-    if($currentDay == 5 && $currentHour == 0 && $currentMinute == 0 && $currentSecond == 0){
-      // if($currentHour == 22){
-      $clear = "DELETE FROM contestants";
-      $clearquery = mysqli_query($connect, $clear);
-
-      if($clearquery){
-        echo "It's a new day";
-      }
-    }
-
     if($currentDay >= 5){
   ?>
 
@@ -73,17 +64,19 @@ if(isset($_SESSION['Username'])){
       <form id="votingForm" action="submit_vote.php" method="post">
         <div class="options">
           <label class="option">
-            <input type="radio" name="option" value="One" data-img-src="https://source.unsplash.com/random/400x300?sig=4" onchange="submitForm()">
+            <input type="radio" name="option" value="<?php echo $usernames[0] ?>" data-img-src="<?php echo $images[0] ?>" onchange="submitForm()">
             <div class="vote">
 
 
-              <img src= "https://source.unsplash.com/random/400x300?sig=4" alt="Picture 1"><br>
+              <img src= "<?php echo $images[0] ?>" alt="Picture 1"><br>
+              <p style = "text-align: center;"><?php echo $usernames[0] ?></p>
             </div>
           </label>
           <label class="option">
-            <input type="radio" name="option" value="Two" data-img-src="https://source.unsplash.com/random/400x300?sig=2" onchange="submitForm()">
+            <input type="radio" name="option" value="<?php echo $usernames[1] ?>" data-img-src="<?php echo $images[1] ?>" onchange="submitForm()">
             <div class="vote">
-              <img src="cars.j" alt="Picture 2">
+              <img src="<?php echo $images[1] ?>" alt="Picture 2"><br>
+              <p style = "text-align: center;"><?php echo $usernames[1] ?></p>
             </div>
           </label>
           <!-- Add more picture options as needed -->
@@ -94,8 +87,8 @@ if(isset($_SESSION['Username'])){
   </div>
 
   <div id = "chart">
-    1<span id = "count1"><?php echo $countone; ?></span><div id = "rank1"><div id = "rank3"></div></div>
-    2<span id = "count2"><?php echo $counttwo; ?></span><div id = "rank2"><div id ="rank4"></div></div>
+    <?php echo $usernames[0] ?><span id = "count1"><?php echo $countone; ?></span><div id = "rank1"><div id = "rank3"></div></div>
+    <?php echo $usernames[1] ?><span id = "count2"><?php echo $counttwo; ?></span><div id = "rank2"><div id ="rank4"></div></div>
   </div>
 
   <footer>
@@ -136,14 +129,12 @@ if(isset($_SESSION['Username'])){
       $confirmmax = mysqli_query($connect, $max);
 
       if($confirmmax){
-        // echo $confirmmax;
         $row = mysqli_fetch_array($confirmmax);
         if(empty($row['ContestantPic'])){
           echo "No one has voted";
         }
         else{
           $winner = $row['ContestantPic'];
-          // echo $winner;
   ?>
 
   <div id = "nottime">Wait till the speculated time</div>
