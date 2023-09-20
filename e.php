@@ -14,8 +14,8 @@ require 'phpmailer/src/SMTP.php';
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username= 'olayori045@gmail.com';
-    $mail->Password = 'wbqojnoelxlxuomx';
+    $mail->Username= 'fameduel@gmail.com';
+    $mail->Password = 'jjugsfnxyerroyoj';
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
 

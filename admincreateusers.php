@@ -15,7 +15,7 @@ $txtUsername = validate($_POST['username']);
 $txtCompanyCode = validate($_POST['code']);
 
 if($txtCompanyCode == $code){
-	$UserVerification = "SELECT Username FROM users WHERE Username = '$txtUsername'";
+	$UserVerification = "SELECT Username FROM adminusers WHERE Username = '$txtUsername'";
 	$UserQuery = mysqli_query($connect, $UserVerification);
 
 	if($UserQuery -> num_rows > 0){
@@ -27,7 +27,7 @@ if($txtCompanyCode == $code){
 				echo "This Username exists";
 
 			}else {
-				$sql = "INSERT INTO users (Email, Username, Password) VALUES ('$txtEmail', '$txtUsername','$txtPassword')";
+				$sql = "INSERT INTO adminusers (Email, Username, Password) VALUES ('$txtEmail', '$txtUsername','$txtPassword')";
 
 				// insert in database 
 				$rs = mysqli_query($connect, $sql);
@@ -40,7 +40,7 @@ if($txtCompanyCode == $code){
 			}
 		}
 	}else{
-		$sql = "INSERT INTO users (Email, Username, Password) VALUES ('$txtEmail', '$txtUsername','$txtPassword')";
+		$sql = "INSERT INTO adminusers (Email, Username, Password) VALUES ('$txtEmail', '$txtUsername','$txtPassword')";
 
 		// insert in database 
 		$rs = mysqli_query($connect, $sql);
