@@ -29,15 +29,15 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 				echo "Logged in!";
 				$_SESSION['Username'] = $row['Username'];
 				echo $_SESSION['Username'];
-				header("Location: admin.html");
+				header("Location: admin.php");
 				exit();
 			}else{
-				header("Location: adminlogin.php?error=Incorrect Username or Password");
+				header("Location: adminlogin.php?error=Incorrect Password");
 				exit();	
 			}
 
 		}else{
-			header("Location: adminlogin.php?error=Incorrect Username or Password");
+			header("Location: adminlogin.php?error=Incorrect Username");
 			exit();	
 	}
 }

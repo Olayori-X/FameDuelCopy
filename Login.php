@@ -25,6 +25,7 @@
         </div>
         <button type="submit">Log In</button>
         <p>If you haven't created an account, <a href = "Signup.php">Sign up</a> here</p>
+        <p><a href = "ForgotPassword.php" style = "text-decoration: none;">Forgot Password?</a></p>
       </form>
     </main>
   </div>

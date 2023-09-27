@@ -8,7 +8,7 @@
 
     if($clearquery){
         if($deletequery){
-            header("Location: admin.html?msg=Deleted");
+            header("Location: admin.php?msg=Deleted");
         }
     }
 ?>

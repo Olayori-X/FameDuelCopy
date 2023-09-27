@@ -1,3 +1,8 @@
+<?php
+session_start();
+    if(isset($_SESSION["Username"])){
+        $username = $_SESSION["Username"];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="admin.html">Dashboard</a>
+                    <a class="nav-link" href="admin.php">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Users</a>
@@ -115,3 +120,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+<?php
+    }else{
+        header("Location: adminlogin.php");
+    }
+?>

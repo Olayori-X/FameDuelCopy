@@ -32,12 +32,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 				header("Location: vote.php");
 				exit();
 			}else{
-				header("Location: Login.php?error=Incorrect Username or Password");
+				header("Location: Login.php?error=Incorrect Password");
 				exit();	
 			}
 
 		}else{
-			header("Location: Login.php?error=Incorrect Username or Password");
+			header("Location: Login.php?error=Incorrect Username");
 			exit();	
 	}
 }

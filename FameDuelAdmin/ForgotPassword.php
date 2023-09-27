@@ -6,7 +6,7 @@
     </head>
     <body>
         <header>
-          <h1>Face Duel</h1>
+          <h1>Fame Duel</h1>
         </header>
     
         <div class="container">
@@ -41,7 +41,7 @@
                 echo "Email is required";
             }
             else{
-                $check = "SELECT Username FROM users WHERE Email = '$email' ";
+                $check = "SELECT Username FROM adminusers WHERE Email = '$email' ";
 
                 $confirm = mysqli_query($connect, $check);
 
@@ -73,7 +73,7 @@
                 echo "Username is required";
             }
             else{
-                $checkusername = "SELECT Username fROM users WHERE Username = '$username' ";
+                $checkusername = "SELECT * FROM adminusers WHERE Username = '$username' ";
                 $confirmusername = mysqli_query($connect, $checkusername);
 
                 if(mysqli_num_rows($confirmusername) < 1){
@@ -82,9 +82,10 @@
                 else{
                     session_start();
                     while($row = mysqli_fetch_array($confirmusername)){
-                        $_SESSION['Email'] = $row["Email"];
+                        $_SESSION['Email'] = $row['Email'];
                     }
                     $_SESSION['Username'] = $username;
+                    echo $_SESSION['Email'];
                     header("Location: e.php");
                 }
             }

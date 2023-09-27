@@ -23,7 +23,7 @@
                             $key = $_GET['key'];
                         
 
-                            $check = "SELECT Username FROM users WHERE Email = '$key' ";
+                            $check = "SELECT Username FROM adminusers WHERE Email = '$key' ";
 
                             $confirm = mysqli_query($connect, $check);
 
