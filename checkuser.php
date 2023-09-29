@@ -12,10 +12,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 	$password = validate($_POST['password']);
 
 	if (empty($username)){
-		header("Location: Login.php?error=Username is required");
+		header("Location: Login.php?message=Username is required");
 		exit();
 	}else if(empty($password)) {
-		header("Location: Login.php?error=Password is required");
+		header("Location: Login.php?message=Password is required");
 		exit();
 	}else{
 		$info = "SELECT * FROM users WHERE Username = '$username' ";
@@ -32,14 +32,16 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 				header("Location: vote.php");
 				exit();
 			}else{
-				header("Location: Login.php?error=Incorrect Password");
+				header("Location: Login.php?message=Incorrect Password");
 				exit();	
 			}
 
 		}else{
-			header("Location: Login.php?error=Incorrect Username");
+			header("Location: Login.php?message=Incorrect Username");
 			exit();	
+		}
 	}
-}
+}else{
+	header("Location: Login.php");
 }
 ?>

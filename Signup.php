@@ -1,3 +1,4 @@
+<?php if(isset($_GET['email'])){ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,14 +12,15 @@
 
   <div class="container">
     <main>
-      <?php if(isset($_GET['error'])){?>
-        <p class = "error"><?php echo $_GET['error']; ?></p>
+      <?php if(isset($_GET['message'])){?>
+        <p class = "message"><?php echo $_GET['message']; ?></p>
       <?php } ?>
       <form id="signupForm" action="createusers.php" method="post">
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" value= "<?php echo $_GET['email']; ?>" id="email" name="email" readonly>
         </div>
+
 
         <div class="form-group">
           <label for="username">Username</label>
@@ -28,7 +30,7 @@
           <label for="password">Password</label>
           <input type="password" id="password" name="password" required>
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" name = "submit">Sign Up</button>
         <p>If you have an account, <a href = "Login.php">Log In</a></p>
       </form>
     </main>
@@ -39,3 +41,7 @@
   </footer>
 </body>
 </html>
+
+<?php }else{
+  header("Location: register.php");
+}

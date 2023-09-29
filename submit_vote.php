@@ -38,4 +38,7 @@ if(isset($_POST['option'])){
         }
     }
 
+}else{
+    header("Location: Login.php");
 }
+?>

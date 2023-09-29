@@ -5,10 +5,9 @@
     require 'phpmailer/src/Exception.php';
     require 'phpmailer/src/PHPMailer.php';
     require 'phpmailer/src/SMTP.php';
-
-    session_start(); 
-    if(isset($_SESSION['Email'])){
-        $email = $_SESSION['Email'];
+ 
+    if(isset($_POST['email'])){
+        $email = $_POST['email'];
 
         $mail = new PHPMailer(true);
 
@@ -27,7 +26,7 @@
         $mail->isHTML(true);
 
         $mail->Subject = "Link to change your password";
-        $mail->Body = "Click <a href = 'localhost/FameDuel/FameDuelAdmin/changepassword.php?key=$email'>here</a> to change your password";
+        $mail->Body = "Click <a href = 'localhost/FameDuel/Signup.php?key=$email'>here</a> to continue registration";
 
         $mail->send();
 
@@ -35,8 +34,10 @@
         "
         <script>
         alert('Sent Successfully');
-        document.location.href = 'ForgotPassword.php?message=A link has been sent to your mail';
+        document.location.href = 'register.php?message=A link has been sent to your mail;
         </script>
         ";
+    }else{
+        header("Location: Login.php");
     }
 ?>

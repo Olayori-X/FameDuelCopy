@@ -1,3 +1,8 @@
+<?php
+session_start();
+    if(isset($_SESSION["Username"])){
+        $username = $_SESSION["Username"];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +20,7 @@
 </head>
 
 <body>
-<body onload = "getVotes()">
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Fame Duel Admin Panel</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,12 +57,15 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="border p-4">
+            <?php if(isset($_GET['message'])){?>
+                <p><?php echo $_GET['message']; ?></p>
+            <?php } ?>
+            <form method="post" action="uploadimage.php" class="border p-4" enctype="multipart/form-data">
 
                 <!-- File Input Group -->
                 <div class="form-group">
                     <label for="file" class="d-block">Upload Image</label>
-                    <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event);" class="form-control-file">
+                    <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event);" class="form-control-file" required>
                 </div>
 
                 <!-- Image Preview -->
@@ -67,12 +75,12 @@
 
                 <div class = "form-group">
                     <label for="username" class="d-block">Input Username</label>
-                    <input type="text" name="username" id="username">
+                    <input type="text" name="username" id="username" required>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Submit">
+                    <input type="submit" class="btn btn-primary" value="Submit" name = "submit">
                 </div>
 
             </form>
@@ -95,47 +103,7 @@
 </body>
 </html>
 <?php
-
-include 'connect.php';
-if(isset($_POST['image'])){
-    include "validate.php";
-
-    validate($_POST['image']);
-
-    $image = $_POST['image'];
-    $username = $_POST['username'];
-
-    if(empty($image)){
-        echo "Voters need to see your face";
+    }else{
+        header("Location: adminlogin.php");
     }
-    elseif(empty($username)){
-        echo "Please input your number";
-    }
-    else{
-        $checkexist = "SELECT Username FROM images WHERE Username = '$username'";
-        $checkexistquery = mysqli_query($connect,$checkexist);
-
-        if($checkexistquery -> num_rows > 0){
-            while($row = $checkexistquery->fetch_assoc()) {
-                // echo $row['Username'];
-                if($row['Username'] === $username){
-                    echo "Please, wait a little while. You're on a roll.";
-                }
-                else{
-                    echo "pass";
-                }
-            }
-        }else{
-            $insert = "INSERT INTO images(UserName, Image) VALUES('$username', '$image')";
-
-            $confirm = mysqli_query($connect, $insert);
-
-            if($confirm){
-                echo "Inserted";
-            }
-        }
-    }
-}
-
 ?>
-

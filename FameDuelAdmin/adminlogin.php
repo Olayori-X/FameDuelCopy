@@ -11,8 +11,8 @@
 
   <div class="container">
     <main>
-      <?php if(isset($_GET['error'])){?>
-        <p class = "error"><?php echo $_GET['error']; ?></p>
+      <?php if(isset($_GET['message'])){?>
+        <p class = "message"><?php echo $_GET['message']; ?></p>
       <?php } ?>
       <form id="loginForm" action="admincheckuser.php" method="post">
         <div class="form-group">

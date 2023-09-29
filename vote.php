@@ -51,7 +51,7 @@ if(isset($_SESSION['Username'])){
       $percenttwo = 50;
     }
 
-    if($currentDay >= 5){
+    if($currentDay >= 4){
   ?>
 
 <?php if(isset($_GET['error'])){?>
@@ -68,14 +68,14 @@ if(isset($_SESSION['Username'])){
             <div class="vote">
 
 
-              <img src= "<?php echo $images[0] ?>" alt="Picture 1"><br>
+              <img style= "height: 500px; width: 400px" src= "<?php echo $images[0] ?>" alt="Picture 1"><br>
               <p style = "text-align: center;"><?php echo $usernames[0] ?></p>
             </div>
           </label>
           <label class="option">
             <input type="radio" name="option" value="<?php echo $usernames[1] ?>" data-img-src="<?php echo $images[1] ?>" onchange="submitForm()">
             <div class="vote">
-              <img src="<?php echo $images[1] ?>" alt="Picture 2"><br>
+              <img height = "500px;" src="<?php echo $images[1] ?>" alt="Picture 2"><br>
               <p style = "text-align: center;"><?php echo $usernames[1] ?></p>
             </div>
           </label>

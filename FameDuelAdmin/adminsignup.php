@@ -1,3 +1,4 @@
+<?php if(isset($_GET['email'])){ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +12,13 @@
 
   <div class="container">
     <main>
-      <?php if(isset($_GET['error'])){?>
-        <p class = "error"><?php echo $_GET['error']; ?></p>
+    <?php if(isset($_GET['message'])){?>
+        <p class = "message"><?php echo $_GET['message']; ?></p>
       <?php } ?>
       <form id="signupForm" action="admincreateusers.php" method="post">
-        <div class="form-group">
+      <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" value= "<?php echo $_GET['email']; ?>" id="email" name="email" readonly>
         </div>
 
         <div class="form-group">
@@ -42,7 +43,10 @@
   </div>
 
   <footer>
-    &copy; 2023 Fame Duel. All rights reserved.
+    2023 Fame Duel. All rights reserved.
   </footer>
 </body>
 </html>
+<?php }else{
+  header("Location: register.php");
+}
