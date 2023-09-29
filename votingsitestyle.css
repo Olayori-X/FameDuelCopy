@@ -17,7 +17,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  width: 80%;
   margin: 0 auto;
   padding: 20px;
 }
@@ -71,8 +71,8 @@ main {
 
 /* Options - Mobile View */
 .options {
-  display: flex;
-  flex-direction: column;
+  float: none;
+  width: 100%;
 }
 
 .option {
@@ -223,6 +223,12 @@ footer {
   .option:last-child {
     margin-right: 0;
   }
+  .options {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 50%;
+  }
 }
 
 /* For mobile view (up to 767px width) */
@@ -242,3 +248,4 @@ footer {
     max-width: 100%;
     max-height: 100%;
   }
+

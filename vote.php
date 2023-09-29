@@ -9,7 +9,7 @@ if(isset($_SESSION['Username'])){
 <head>
   <title>Voting Site</title>
   <link rel="stylesheet" type="text/css" href="votingsitestyle.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 </head>
 <body>
   <header>
@@ -58,24 +58,27 @@ if(isset($_SESSION['Username'])){
   <div id = "error" onclick="closeDiv('error')"><?php echo $_GET['error']; ?><button type = button>Close</button></div>
 <?php } ?>
 
-<div class="container">
-    <main>
+
+  <main>
+    <div class="container">
       <h2 class="question">Select your favorite photo</h2>
+
       <form id="votingForm" action="submit_vote.php" method="post">
         <div class="options">
           <label class="option">
             <input type="radio" name="option" value="<?php echo $usernames[0] ?>" data-img-src="<?php echo $images[0] ?>" onchange="submitForm()">
             <div class="vote">
-
-
               <img style= "height: 500px; width: 400px" src= "<?php echo $images[0] ?>" alt="Picture 1"><br>
               <p style = "text-align: center;"><?php echo $usernames[0] ?></p>
-            </div>
+            </div>            
           </label>
+        </div>
+
+        <div class = "options">
           <label class="option">
             <input type="radio" name="option" value="<?php echo $usernames[1] ?>" data-img-src="<?php echo $images[1] ?>" onchange="submitForm()">
             <div class="vote">
-              <img height = "500px;" src="<?php echo $images[1] ?>" alt="Picture 2"><br>
+              <img height = "500px; width: 400px;" src="<?php echo $images[1] ?>" alt="Picture 2"><br>
               <p style = "text-align: center;"><?php echo $usernames[1] ?></p>
             </div>
           </label>
@@ -83,8 +86,8 @@ if(isset($_SESSION['Username'])){
         </div>
         <input type = "hidden" id = "chosenimage" name = "chosenimage">
       </form>
-    </main>
-  </div>
+    </div>
+  </main>
 
   <div id = "chart">
     <?php echo $usernames[0] ?><span id = "count1"><?php echo $countone; ?></span><div id = "rank1"><div id = "rank3"></div></div>
