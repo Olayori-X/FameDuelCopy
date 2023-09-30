@@ -29,7 +29,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 				echo "Logged in!";
 				$_SESSION['Username'] = $row['Username'];
 				echo $_SESSION['Username'];
-				header("Location: vote.php");
+				header("Location: index.php");
 				exit();
 			}else{
 				header("Location: Login.php?message=Incorrect Password");

@@ -17,14 +17,14 @@ if(isset($_POST['option'])){
         while($row = $UserQuery->fetch_assoc()) {
             if($row['UserName'] === $username){
                 //header("Location: Signup.php?emessage=This Username exists");
-                header("Location: vote.php?error=This User has voted");
+                header("Location: index.php?message=This User has voted");
             }
             else{
                 $vote = "INSERT INTO contestants(Contestant,ContestantPic, UserName) VALUES('$value', '$image', '$username')";
                 $votequery = mysqli_query($connect, $vote);
                 
                 if($votequery){
-                    echo "Voted";
+                    header("Location: index.php?message= Successful");
                 }
             }
         }
@@ -33,8 +33,7 @@ if(isset($_POST['option'])){
         $votequery = mysqli_query($connect, $vote);
         
         if($votequery){
-            echo "Voted";
-            header("Location: vote.php?message= Successful");
+            header("Location: index.php?message= Successful");
         }
     }
 
