@@ -20,15 +20,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 	}else{
 		$info = "SELECT * FROM users WHERE Username = '$username' ";
 		$SQLpass = mysqli_query($connect, $info);
-		echo $username;
 
 		if (mysqli_num_rows($SQLpass) === 1) {
 		$row = mysqli_fetch_assoc($SQLpass);
 
 			if($row['Password'] === $password){
-				echo "Logged in!";
 				$_SESSION['Username'] = $row['Username'];
-				echo $_SESSION['Username'];
 				header("Location: index.php");
 				exit();
 			}else{

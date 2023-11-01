@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FameDuel Vote your favourite</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- <link rel = "stylesheet" href = "Bootstrap/B-css/bootstrap.min.css"> -->
+
+    <link id="light-mode-stylesheet" rel="stylesheet" type="text/css" href="votingsitestyle.css">
+    <link id="dark-mode-stylesheet" rel="stylesheet" href="votingsitestyles-dark.css" disabled>
+    <script src = "indexjs.js"></script>
+
+</head>
+<body onload = "showMode(); countvote();">
+
+<header class="bg-dark text-light py-0">
+    <div class="container">
+        <h1 class="mb-0">FameDuel</h1>
+        <div class="clearfix"></div>
+    </div>
+</header>
+
+
+<main class="container mt-5">
+    <h2 class="question" style = "text-align: center">Select your favourite ❤️</h2>
+
+    <form id="votingForm" action="submit_vote.php" method="post">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <label class="option w-100">
+                    <input type="radio" name="option" value="Contestant 1" data-img-src="profile.png" onchange="submitForm()">
+                    <div class="vote text-center">
+                        <img src="profile.png" class="img-fluid" alt="Picture 1">
+                        <p>Contestant 1</p>
+                    </div>
+                </label>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <label class="option w-100">
+                    <input type="radio" name="option" value="Contestant 2" data-img-src="logo.png" onchange="submitForm()">
+                    <div class="vote text-center">
+                        <img src="logo.png" class="img-fluid" alt="Picture 2">
+                        <p>Contestant 2</p>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <input type="hidden" id="chosenimage" name="chosenimage">
+    </form>
+</main>
+
+<div class="position-fixed" style="bottom: 150px; right: 20px;">
+  <button id = "toggle-mode" onclick= "toggleDarkMode()"><i class="fas fa-adjust fa-4x"></i></button>
+</div>
+
+<div id="chart" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            Contestant 1<span id="count1">0</span>
+            <div id="rank1" class="progress mt-2">
+                <div id="rank3" class="progress-bar bg-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            Contestant 1<span id="count2">0</span>
+            <div id="rank2" class="progress mt-2">
+                <div id="rank4" class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+<script>
+    function submitForm() {
+      var radioButtons = document.querySelectorAll('input[name="option"]');
+      for (var i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked) {
+          contestant_image = radioButtons[i].getAttribute('data-img-src');
+          document.getElementById("chosenimage").value = contestant_image;
+          break; // Exit the loop when the selected radio button is found
+        }
+    }
+      document.getElementById('votingForm').submit();
+    }
+    function closeDiv(element){
+      var div = document.getElementById(element);
+      if(div.style.display == "block"){
+        div.style.display = "none";
+      }else{
+        div.style.display = "block";
+      }
+    }
+    
+    setInterval(countvote, 200);
+</script>
+
+
+<footer class="bg-dark text-light text-center py-3 mt-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p>&copy; 2023 Fame Duel. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <a href="https://wa.me/+2347086181412" class="text-white mr-3"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:fameduel@gmail.com" class="text-white mr-3"><i class="fas fa-envelope"></i> Contact Us</a>
+        <a href="logout.php" class="text-white"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        <p><i class="fas fa-phone"></i> Phone: +2347086181412</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -31,12 +31,6 @@
 
         $mail->send();
 
-        echo
-        "
-        <script>
-        alert('Sent Successfully');
-        document.location.href = 'ForgotPassword.php?message=A link has been sent to your mail';
-        </script>
-        ";
+        header("Location: ForgotPassword.php?message= A link has been sent to your mail");
     }
 ?>

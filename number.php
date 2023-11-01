@@ -1,15 +1,17 @@
 <?php
-    // $number = "09030816273";
-    // $nu = "";
 
-    // for($i = 0; $i < 4; $i++){
-    //     $nu .= "$number[$i]";
-    // }
-
-    // if($nu == "0903" || "")
-    $to = "09030816273@sms.co.za";
+    $to = "latubosun4328@gmail.com";
     $from = "olayori045@gmail.com";
     $message = "hello";
     $headers = "From: $from\n";
-    mail($to, '', $message, $headers);
+    ini_set('SMTPDebug', 2);
+
+
+    if(mail($to, '', $message, $headers)){
+        echo "Successful";
+    }else{
+        $lastError = error_get_last();
+        echo "Error: ";
+    }
+    
 ?>

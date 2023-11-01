@@ -6,7 +6,7 @@
         $username = $_POST['username'];
 
         if(empty($username)){
-            echo "Please input your number";
+            header("Location: adminaddcontestants?message=Please input your number");
         }
         else{
             $checkexist = "SELECT Username FROM images WHERE Username = '$username'";
@@ -19,7 +19,7 @@
                     }
                 }
             }else{
-                $target_dir = "C:/Users/PC/Desktop/Xampp/htdocs/FameDuel/uploads/";
+                $target_dir = "C:/Xampp/htdocs/FameDuel/uploads/";
                 $target_file = $target_dir . basename($_FILES["image"]["name"]);
                 $uploadOk = 1;
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -29,33 +29,32 @@
                 if($check !== false) {
                     $uploadOk = 1;
                 } else {
-                    echo "File is not an image.";
+                    header("Location: adminaddcontestants?message=File is not an image.");
                     $uploadOk = 0;
                 }
 
                 // Check if file already exists
                 if (file_exists($target_file)) {
-                    echo "Sorry, file already exists.";
+                    header("Location: adminaddcontestants?message=Sorry, file already exists.");
                     $uploadOk = 0;
                 }
 
                 // Check file size
-                if ($_FILES["image"]["size"] > 1000000) {
-                    echo "Sorry, your file is too large.";
-                    echo $_FILES['image']['size'];
+                if ($_FILES["image"]["size"] > 50000) {
+                    header("Location: adminaddcontestants.php?message=Sorry, File limit is 50MB");
                     $uploadOk = 0;
                 }
 
                 // Allow certain file formats
                 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
                 && $imageFileType != "gif" ) {
-                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                header("Location: adminaddcontestants?message=Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
                 $uploadOk = 0;
                 }
 
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk == 0) {
-                    echo "Sorry, your file was not uploaded.";
+                    header("Location: adminaddcontestants?message= Sorry your file was not uploaded");
                     // if everything is ok, try to upload file
                 } else {
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -68,7 +67,7 @@
                             header("Location: adminaddcontestants.php?message=Uploaded");
                         }
                     } else {
-                        echo "Sorry, there was an error uploading your file. Error:"  . $_FILES['image']['error'];
+                        header("Location: adminaddcontestants?message=Sorry, there was an error uploading your file.");
                     }
                 }
             }

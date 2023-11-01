@@ -19,7 +19,6 @@ if(isset($_POST['submit'])){
 
 	if($UserQuery -> num_rows > 0){
 		while($row = $UserQuery->fetch_assoc()) {
-			echo $row['Username'];
 			if($row['Username'] === $txtUsername){
 				header("Location: Signup.php?message=This Username exists");
 

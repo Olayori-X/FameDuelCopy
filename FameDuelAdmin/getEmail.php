@@ -6,7 +6,7 @@
         $email = validate($_POST['email']);
 
         if(empty($email)){
-            echo "Email is required";
+             header("Location: ForgotPassword?message=Email is required");
         }
         else{
             $check = "SELECT Username FROM adminusers WHERE Email = '$email' ";

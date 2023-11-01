@@ -25,18 +25,12 @@
 
         $mail->isHTML(true);
 
-        $mail->Subject = "Link to change your password";
+        $mail->Subject = "Validate your Email";
         $mail->Body = "Click <a href = 'localhost/FameDuel/Signup.php?key=$email'>here</a> to continue registration";
 
         $mail->send();
 
-        echo
-        "
-        <script>
-        alert('Sent Successfully');
-        document.location.href = 'register.php?message=A link has been sent to your mail;
-        </script>
-        ";
+        header("Location: register.php?message=A link has been sent to your mail");
     }else{
         header("Location: Login.php");
     }

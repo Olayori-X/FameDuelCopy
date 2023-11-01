@@ -9,6 +9,7 @@ session_start();
     <title>Vote your Choice</title>
     <!-- Add Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         #output{
             background-image:url('profile.png');
@@ -87,6 +88,10 @@ session_start();
         </div>
     </div>
 </div>
+
+<footer class="bg-dark text-light text-center py-3 mt-5 fixed-bottom">
+    &copy; 2023 Fame Duel. All rights reserved.
+</footer>
 
 <!-- Add Bootstrap JS and jQuery (required for Bootstrap) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

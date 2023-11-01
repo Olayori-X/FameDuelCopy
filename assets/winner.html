@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FameDuel Vote your favourite</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- <link rel = "stylesheet" href = "Bootstrap/B-css/bootstrap.min.css"> -->
+
+    <link id="light-mode-stylesheet" rel="stylesheet" type="text/css" href="votingsitestyle.css">
+    <link id="dark-mode-stylesheet" rel="stylesheet" href="votingsitestyles-dark.css" disabled>
+    <script src = "indexjs.js"></script>
+
+</head>
+<body onload = "showMode(); countvote();">
+
+<header class="bg-dark text-light py-0">
+    <div class="container">
+        <h1 class="mb-0">FameDuel</h1>
+        <div class="clearfix"></div>
+    </div>
+</header>
+    <div id="nottime" class="bg-light text-dark p-4 rounded">Wait till the speculated time</div>
+    <div id="winner-container" class="bg-dark text-light text-center">
+        <img src="profile.png" class="winner img-fluid" alt="Winner">
+    </div>
+
+<footer class="bg-dark text-light text-center py-3 mt-6">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+        <p>&copy; 2023 Fame Duel. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-right">
+        <a href="https://wa.me/+2347086181412" class="text-white mr-3"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:fameduel@gmail.com" class="text-white mr-3"><i class="fas fa-envelope"></i> Contact Us</a>
+        <a href="logout.php" class="text-white"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        <p><i class="fas fa-phone"></i> Phone: +2347086181412</p>
+        </div>
+    </div>
+    </div>
+</footer>
+</body>
+</html>

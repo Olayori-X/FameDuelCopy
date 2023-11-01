@@ -7,10 +7,10 @@
         $email = validate($_POST['email']);
 
         if(empty($email)){
-            echo "Email is required";
+            header("Location: ForgotPassword?message=Email is required");
         }
         else{
-            $check = "SELECT Username FROM adminusers WHERE Email = '$email' ";
+            $check = "SELECT Username FROM users WHERE Email = '$email' ";
 
             $confirm = mysqli_query($connect, $check);
 
@@ -32,7 +32,7 @@
             header("Location: ForgotPassword.php?message=Username is required");
         }
         else{
-            $checkusername = "SELECT * FROM adminusers WHERE Username = '$username' ";
+            $checkusername = "SELECT * FROM users WHERE Username = '$username' ";
             $confirmusername = mysqli_query($connect, $checkusername);
 
             if(mysqli_num_rows($confirmusername) < 1){
@@ -48,6 +48,6 @@
             }
         }
     }else{
-        header("Location: adminlogin.php");
+        header("Location: Login.php");
     }
     ?>
