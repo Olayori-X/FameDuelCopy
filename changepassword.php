@@ -1,3 +1,35 @@
+<?php
+    include 'connect.php';
+    include 'validate.php';
+    if(isset($_GET['key'])&&isset($_GET['otp'])){
+        $key = $_GET['key'];
+        $codedotp = md5($_GET['otp']);
+    
+
+        $check = "SELECT Username FROM users WHERE Email = '$key' ";
+
+        $confirm = mysqli_query($connect, $check);
+
+        if (mysqli_num_rows($confirm) >= 1) {
+            $username = [];
+
+            while($row = mysqli_fetch_array($confirm)){
+                $username[] = $row['Username'];
+            }
+        }
+        
+        $checkotp = "SELECT * FROM changepasswordlinkstatus WHERE number = '$codedotp'";
+        $checkquery = mysqli_query($connect, $checkotp);
+        
+        if($checkquery){
+            if (mysqli_num_rows($checkquery) === 1) {
+                $row = mysqli_fetch_assoc($checkquery);
+                
+                if($row['used'] == true){
+                    echo "This link has expired. Click <a href = register.php>here</a> to get a new link";
+                }else{
+                    
+?>
 <DOCTYPE html>
 <html>
     <head>
@@ -6,6 +38,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="icon" href="assets/favicon.png" type="image/png">
+  <meta property="og:title" content="FunDuel">
+    <meta property="og:description" content="Select your favourite ❤">
+    <meta property="og:image" content="https://netcarvers.com.ng/FunDuel/assets/logo.png">
+    <meta property="og:url" content="https://www.netcarvers.com.ng/FunDuel/index.php">
+    
+    <style>
+      .password-container {
+            position: relative;
+            width: 100%; /* Adjust the width as needed */
+        }
+
+        .password-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px; /* Adjust the right position as needed */
+            cursor: pointer;
+        }
+  </style>
     </head>
     <body>
         <header>
@@ -21,38 +73,26 @@
                     <?php } ?>
 
                         <form id = "" action = "passwordchange.php" method = "POST">
-                            <?php
-                                include 'connect.php';
-                                include 'validate.php';
-                                if(isset($_GET['key'])){
-                                    $key = $_GET['key'];
-                                
-
-                                    $check = "SELECT Username FROM users WHERE Email = '$key' ";
-
-                                    $confirm = mysqli_query($connect, $check);
-
-                                    if (mysqli_num_rows($confirm) >= 1) {
-                                        $username = [];
-
-                                        while($row = mysqli_fetch_array($confirm)){
-                                            $username[] = $row['Username'];
-                                        }
-                                    }
-                            ?>
+                            
                             <div class = "form-group">
                                 <label>New Password</label><br>
-                                <input type = "password" id = "nPass" name = "nPass"><br><br>
+                                <div class="password-container">
+                                    <input type = "password" id = "nPass" name = "nPass" required><i class="fas fa-eye-slash password-icon" id="toggleIcon"></i>
+                                </div>
                             </div>
 
                             <div class = "form-group">
                                 <label>Confirm Password</label><br>
-                                <input type = "password" id = "cPass" name = "cPass"><br><br>
+                                <div class="password-container">
+                                    <input type = "password" id = "cPass" name = "cPass" required><i class="fas fa-eye-slash password-icon" id="toggleIcon2"></i>
+                                </div>
                             </div>
 
                             <input type = "hidden" name = "username" value="<?php echo $username[0] ?>">
+                            <input type = "hidden" name = "email" value = "<?php echo $_GET['key'];?>">
+                            <input type = "hidden" name = "otp" value = "<?php echo $_GET['otp'];?>">
 
-                            <button type ="submit" class = "btn btn-primary">Change</button>
+                            <button type ="submit" name = "submit" class = "btn btn-primary">Change</button>
                         </form>
                     </main>
                 </div>
@@ -74,10 +114,47 @@
                 </div>
             </div>
         </footer>
+        <script>
+        const passwordInput = document.getElementById('nPass');
+        const passwordInput2 = document.getElementById('cPass');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const toggleIcon2 = document.getElementById('toggleIcon2');
+
+        toggleIcon.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        });
+        
+        toggleIcon2.addEventListener('click', () => {
+            if (passwordInput2.type === 'password') {
+                passwordInput2.type = 'text';
+                toggleIcon2.classList.remove('fa-eye-slash');
+                toggleIcon2.classList.add('fa-eye');
+            } else {
+                passwordInput2.type = 'password';
+                toggleIcon2.classList.remove('fa-eye');
+                toggleIcon2.classList.add('fa-eye-slash');
+            }
+        });
+</script>
     </body>
 </html>
 <?php 
+                }
+        }else{
+            echo "This link does not exist. Click <a href = Login.php>here</a> to get a link";
+        }
     }else{
-        header("Location: Login.php");
-    } 
+        echo "Yes";
+    }
+}else{
+  header("Location: Login.php");
+}
 ?>

@@ -74,6 +74,8 @@ canvas {
   width: 100%; /* Make the canvas 100% of its container's width */
   height: 100%; /* Allow the height to adjust proportionally */
   display: block; /* Remove any default inline styling */
+  border: 2px solid #ffcc00;
+  font-family: Algerian;
 }
 
 #canvascontainer{
@@ -91,6 +93,23 @@ canvas {
   /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
   z-index: 9;
 }
+
+#count1, #count2{
+    text-align: right;
+}
+
+#downloadButtonDiv, #closecanvas{
+    /*width : 100%;*/
+    background-color: #333;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    color: #ffcc00;
+}
+
+/*#downloadButton{*/
+/*    color: blue;*/
+/*}*/
   
   
   /* Media query for tablets and larger screens */

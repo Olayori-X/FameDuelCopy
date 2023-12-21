@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
+  <title>Fun Duel🏆 - Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+    <meta property="og:title" content="Fun Duel🏆">
+    <meta property="og:description" content="Support your choice✊. Emerge  Victorious🏆">
+    <meta property="og:image" content="https://netcarvers.com.ng/FunDuel/assets/logo.png">
+    <meta property="og:url" content="https://www.netcarvers.com.ng/FunDuel/index.php">
   <!-- <link rel = "stylesheet" href = "loginstyle.css"> -->
+  <style>
+      .password-container {
+            position: relative;
+            width: 100%; /* Adjust the width as needed */
+        }
+
+        .password-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px; /* Adjust the right position as needed */
+            cursor: pointer;
+        }
+  </style>
 </head>
 <body>
   <header class="bg-dark text-light text-center py-3">
-    <h1>Login</h1>
+    <h1>Fun Duel🏆 - Login</h1>
   </header>
 
   <div class="container mt-5">
@@ -26,7 +45,10 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" id="password" name="password" class="form-control" required>
+              <div class="password-container">
+                  <input type="password" id="password" name="password" class="form-control" required>
+                  <i class="fas fa-eye-slash password-icon" id="toggleIcon"></i>
+                </div>
             </div>
             <button type="submit" class = "btn btn-primary">Log In</button>
             <p class="mt-2">If you haven't created an account, <a href="Signup.php">Sign up</a> here</p>
@@ -38,19 +60,32 @@
   </div>
 
 <footer class="bg-dark text-light text-center py-3 mt-5 fixed-bottom">
-<div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <p>&copy; 2023 Fame Duel. All rights reserved.</p>
-      </div>
-      <div class="col-md-6 text-right">
-        <a href="https://wa.me/+2347086181412" class="text-white mr-3"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:fameduel@gmail.com" class="text-white mr-3"><i class="fas fa-envelope"></i> Contact Us</a>
-        <a href="logout.php" class="text-white"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-        <p><i class="fas fa-phone"></i> Phone: +2347086181412</p>
-      </div>
-    </div>
+    <p>&copy; 2023 Fun Duel 🏆. All rights reserved.</p>
+  <div>
+    <a href="mailto:fameduel@gmail.com" class="text-white mr-3"><i class="fas fa-envelope fa-2x"></i></a>
+    <a href="https://wa.me/+2347086181412" class="text-white mr-3"><i class="fab fa-whatsapp fa-2x"></i></a>
+    <!--<a href = "#" class="text-white mr-3"><i class="fab fa-instagram fa-2x"></i></a>-->
+    <a href="https://twitter.com/The_fun_duel" class="text-white mr-3"><i class="fab fa-twitter fa-2x"></i></a>
+    <br>
+      <a href="https://twitter.com/The_fun_duel" class="text-white mr-2">Follow on <img src = "assets/twitter.webp" width = "20px;"/> for the latest updates
   </div>
 </footer>
+
+<script>
+    const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        toggleIcon.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        });
+</script>
 </body>
 </html>

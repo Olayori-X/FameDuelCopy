@@ -9,9 +9,16 @@ if(isset($_SESSION['Username'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voting Site</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Fun Duel🏆 </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+    <meta property="og:title" content="Fun Duel🏆">
+    <meta property="og:description" content="Support your choice✊. Emerge  Victorious🏆">
+    <meta property="og:image" content="https://netcarvers.com.ng/FunDuel/assets/logo.png">
+    <meta property="og:url" content="https://www.netcarvers.com.ng/FunDuel/index.php">
+
+
     <!-- <link rel = "stylesheet" href = "Bootstrap/B-css/bootstrap.min.css"> -->
 
     <link id="light-mode-stylesheet" rel="stylesheet" type="text/css" href="votingsitestyle.css">
@@ -19,11 +26,11 @@ if(isset($_SESSION['Username'])){
     <script src = "indexjs.js"></script>
 
 </head>
-<body onload = "showMode()">
+<body onload = "showMode(); countvote();">
 
 <header class="bg-dark text-light py-0">
     <div class="container">
-        <h1 class="mb-0">FameDuel</h1>
+        <h1 class="mb-0">Fun Duel🏆</h1>
         <div class="clearfix"></div>
     </div>
 </header>
@@ -37,36 +44,47 @@ include "contestants.php";
 if($currentDay >= 0){
 ?>
 
-<?php if(isset($_GET['message']) && isset($_GET['reward'])){
+<?php if(isset($_GET['message'])){
     $message = $_GET['message'];
-    $reward = $_GET['reward'];
-            
-?>
-    <!-- <div class="alert alert-info text-center fixed-top" role="alert" id = "message" onclick = "closeDiv('message')"> -->
-        <!-- <div id="shareSuccess" style="display: none;">Shared successfully!</div> -->
-        <div id = "centered-div" class = "container">
-            <div class="row justify-content-center align-items-center" style="height:100vh;">
-                <div class="col-md-6">
-                    <div class = "text-center" id = "canvascontainer"><canvas class = "text-center" id = "canvas"><?php echo $reward ?></canvas></div>
-                    <a id="downloadButton" download = 'download.jpeg' style="display: none;"><i class="fas fa-download"></i></a>
-                    <button id="shareButton" style="display: none;"><i class="fas fa-share-alt"></i></button>
-                    <br><button type="button" onclick = "closeDiv('centered-div')" class="btn btn-secondary">Close</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- <br><button type="button" onclick = "closeDiv('message')" class="btn btn-secondary">Close</button> -->
-    <!-- </div> -->
+    ?>
     <div class="alert alert-info text-center fixed-top" role="alert" id = "message" onclick = "closeDiv('message')">
 
     <?php echo $_GET['message']; ?>
 
     <br><button type="button" onclick = "closeDiv('message')" class="btn btn-secondary">Close</button>
     </div>
-<?php } ?>
+    <?php if( isset($_GET['reward'])){
+    $reward = $_GET['reward'];
+            
+?>
+    <!-- <div class="alert alert-info text-center fixed-top" role="alert" id = "message" onclick = "closeDiv('message')"> -->
+         <div id="shareSuccess" style="display: none;">Shared successfully!</div> 
+        <div id = "centered-div" class = "container">
+            <div class="row justify-content-center align-items-center" style="height:100vh;">
+                <div class="col-md-6">
+                    <div class = "text-center" id = "canvascontainer"><canvas class = "text-center" id = "canvas"><?php echo $reward ?></canvas></div>
+                    <div class = "row">
+                        <div class = "col-md-6"  id = "downloadButtonDiv">
+                            <a id="downloadButton" download = 'download.jpeg' style="display: none;"><b></b>Download</b><i class="fas fa-download"></i>
+                            </a>
+                        </div>
+                        <div class = "col-md-1"></div>
+                            
+                        <div class = "col-md-5" id = "closecanvas" style = "margin-top: 5px;"><button type="button" style= "background-color: transparent; border : none" onclick = "closeDiv('centered-div'); closeDiv('message')" class="btn btn-secondary">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br><button type="button" onclick = "closeDiv('message')" class="btn btn-secondary">Close</button>
+    <!-- </div> -->
+    
+<?php } } ?>
 
 <main class="container mt-5">
-    <h2 class="question" style = "text-align: center">Select your favorite photo</h2>
+    <h2 class="question" style = "text-align: center">Support your choice ✊</h2>
+    <p>Tap just once on your claim to vote</p>
 
     <form id="votingForm" action="submit_vote.php" method="post">
         <div class="row">
@@ -94,26 +112,44 @@ if($currentDay >= 0){
     </form>
 </main>
 
-<div class="position-fixed" style="bottom: 20px; right: 20px;">
-  <button id = "toggle-mode" onclick= "toggleDarkMode()"><i class="fas fa-adjust fa-4x"></i></button>
+<div class="position-fixed" style="bottom: 150px; right: 20px; z-index : 9">
+  <button id = "toggle-mode" onclick= "toggleDarkMode()"><i class="fas fa-adjust fa-2x"></i></button>
 </div>
 
 <div id="chart" class="container">
     <div class="row">
         <div class="col-md-6">
-            <?php echo $usernames[0] ?><span id="count1"></span>
+            <?php echo $usernames[0] ?><span>-></span><span id="count1"></span>
             <div id="rank1" class="progress mt-2">
                 <div id="rank3" class="progress-bar bg-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
         <div class="col-md-6">
-            <?php echo $usernames[1] ?><span id="count2"></span>
+            <?php echo $usernames[1] ?><span>-></span><span id="count2"></span>
             <div id="rank2" class="progress mt-2">
                 <div id="rank4" class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
     </div>
 </div>
+
+<footer class="bg-dark text-light text-center py-4 mt-6">
+  <div class="container text-center">
+        <p>&copy; 2023 Fun Duel 🏆. All rights reserved.</p>
+      <div>
+        <a href="mailto:fameduel@gmail.com" class="text-white mr-3"><i class="fas fa-envelope fa-2x"></i></a>
+        <a href="https://wa.me/+2347086181412" class="text-white mr-3"><i class="fab fa-whatsapp fa-2x"></i></a>
+        <!--<a href = "#" class="text-white mr-3"><i class="fab fa-instagram fa-2x"></i></a>-->
+        <a href="https://twitter.com/The_fun_duel" class="text-white mr-3"><i class="fab fa-twitter fa-2x"></i></a>
+        <p>
+          <a href="https://twitter.com/The_fun_duel" class="text-white mr-2">Follow on <img src = "assets/twitter.webp" width = "20px;"/> for the latest updates
+         </p>
+        <a href="logout.php" class="text-white"><i class="fas fa-sign-out-alt fa-2x"></i> Log Out</a>
+      </div>
+    </div>
+</footer>
+
+
 
     
 <script>
@@ -136,6 +172,8 @@ if($currentDay >= 0){
         div.style.display = "block";
       }
     }
+    
+    countvote();
 </script>
 
 <?php
@@ -155,27 +193,28 @@ if($currentDay >= 0){
 <div id="winner-container" class="bg-dark text-light text-center">
     <img src="<?php echo $winner; ?>" class="winner img-fluid" alt="Winner">
 </div>
+<footer class="bg-dark text-light text-center py-3 mt-5 fixed-bottom">
+    <div class="container text-center">
+        <p>&copy; 2023 Fun Duel 🏆. All rights reserved.</p>
+      <div>
+        <a href="mailto:fameduel@gmail.com" class="text-white mr-3"><i class="fas fa-envelope fa-2x"></i></a>
+        <a href="https://wa.me/+2347086181412" class="text-white mr-3"><i class="fab fa-whatsapp fa-2x"></i></a>
+        <!--<a href = "https://www.instagram.com/fameduel/" class="text-white mr-3"><i class="fab fa-instagram fa-2x"></i></a>-->
+        <a href="https://twitter.com/The_fun_duel" class="text-white mr-3"><i class="fab fa-twitter fa-2x"></i></a>
+        <p>
+          <a href="https://twitter.com/The_fun_duel" class="text-white mr-2">Follow on <img src = "assets/twitter.webp" width = "20px;"/> for the latest updates
+         </p>
+        <a href="logout.php" class="text-white"><i class="fas fa-sign-out-alt fa-2x"></i> Log Out</a>
+      </div>
+    </div>
+</footer>
 
 <?php
         }
     }
 }
 ?>
-<footer class="bg-dark text-light text-center py-3 mt-6">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <p>&copy; 2023 Fame Duel. All rights reserved.</p>
-      </div>
-      <div class="col-md-6 text-right">
-        <a href="https://wa.me/+2347086181412" class="text-white mr-3"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:fameduel@gmail.com" class="text-white mr-3"><i class="fas fa-envelope"></i> Contact Us</a>
-        <a href="logout.php" class="text-white"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-        <p><i class="fas fa-phone"></i> Phone: +2347086181412</p>
-      </div>
-    </div>
-  </div>
-</footer>
+
 </body>
 </html>
 <?php

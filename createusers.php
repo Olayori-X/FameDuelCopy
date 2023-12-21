@@ -11,19 +11,21 @@ if(isset($_POST['submit'])){
 	// $txtCountry = $_POST['country'];
 	// $txtState = $_POST['state'];
 	// $txtCity = $_POST['city'];
-	$txtPassword = validate($_POST['password']);
+	$txtPassword = md5(validate($_POST['password']));
 	$txtUsername = validate($_POST['username']);
+	$codedotp = md5(validate($_POST['otp']));
+	$otp = validate($_POST['otp']);
 
-	$UserVerification = "SELECT Username FROM users WHERE Username = '$txtUsername'";
+	$UserVerification = "SELECT * FROM users WHERE Username = '$txtUsername' OR Email = '$txtEmail'";
 	$UserQuery = mysqli_query($connect, $UserVerification);
 
 	if($UserQuery -> num_rows > 0){
 		while($row = $UserQuery->fetch_assoc()) {
 			if($row['Username'] === $txtUsername){
-				header("Location: Signup.php?message=This Username exists");
+				header("Location: Signup.php?message=This Username exists&&key=$txtEmail&&otp=$otp");
 
 			}elseif($row['Email'] === $txtEmail){
-				header("Location: Signup.php?message=This Email exists");
+				header("Location: Signup.php?message=This Email exists&&key=$txtEmail&&otp=$otp");
 
 			}else {
 				$sql = "INSERT INTO users (Email, Username, Password) VALUES ('$txtEmail', '$txtUsername','$txtPassword')";
@@ -32,8 +34,12 @@ if(isset($_POST['submit'])){
 				$rs = mysqli_query($connect, $sql);
 
 				if($rs){
-					header("Location: Login.php");
-					exit();
+				    $updatelinkstatus = "UPDATE linkstatus SET used = true WHERE number = '$codedotp'";
+				    $updatequery = mysqli_query($connect, $updatelinkstatus);
+				    if($updatequery){
+					    header("Location: Login.php");
+					    exit();
+				    }
 				}
 			}
 		}
@@ -44,12 +50,15 @@ if(isset($_POST['submit'])){
 		$rs = mysqli_query($connect, $sql);
 
 		if($rs){
-			header("Location: Login.php");
-			exit();
+			$updatelinkstatus = "UPDATE linkstatus SET used = true WHERE number = '$codedotp'";
+		    $updatequery = mysqli_query($connect, $updatelinkstatus);
+		    if($updatequery){
+			    header("Location: Login.php");
+			    exit();
+		    }
 		}
 	}
 }else{
 	header("Location: Signup.php");
 }
 ?>
-
