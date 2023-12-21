@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2023 at 04:34 AM
+-- Generation Time: Dec 21, 2023 at 03:29 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,6 +34,25 @@ CREATE TABLE `adminusers` (
   `Password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `adminusers`
+--
+
+INSERT INTO `adminusers` (`id`, `Email`, `Username`, `Password`) VALUES
+(2, 'latubosun4328@gmail.com', 'Olayori', 'facebooklite');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `changepasswordlinkstatus`
+--
+
+CREATE TABLE `changepasswordlinkstatus` (
+  `id` int(255) NOT NULL,
+  `number` varchar(255) NOT NULL,
+  `used` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +65,14 @@ CREATE TABLE `contestants` (
   `ContestantPic` varchar(255) NOT NULL,
   `UserName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contestants`
+--
+
+INSERT INTO `contestants` (`id`, `Contestant`, `ContestantPic`, `UserName`) VALUES
+(9, 'Pinterest', 'uploads/pinterest_board_photo.png', 'Olayori'),
+(10, 'Linkedin', 'uploads/linkedin_profile_image.png', 'Mr.X');
 
 -- --------------------------------------------------------
 
@@ -64,8 +91,28 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `UserName`, `Image`) VALUES
-(1, 'facebookcover', 'facebook_cover_photo_2.png'),
-(2, 'linkedinbanner', 'linkedin_banner_image_1.png');
+(15, 'Linkedin', 'uploads/linkedin_profile_image.png'),
+(16, 'Pinterest', 'uploads/pinterest_board_photo.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `linkstatus`
+--
+
+CREATE TABLE `linkstatus` (
+  `id` int(255) NOT NULL,
+  `number` varchar(255) NOT NULL,
+  `used` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `linkstatus`
+--
+
+INSERT INTO `linkstatus` (`id`, `number`, `used`) VALUES
+(1, 'aa9f3fa309925891d7f47a3b877317ce', '0'),
+(2, 'dc62c4a302ef09097c89353bc05f9445', '0');
 
 -- --------------------------------------------------------
 
@@ -81,6 +128,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `Email`, `Username`, `Password`) VALUES
+(2, 'latubosun4328@gmail.com', 'Mr.X', 'olayori'),
+(3, 'latubosun4328@gmail.com', 'Olayori', 'facebooklite');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -88,6 +143,12 @@ CREATE TABLE `users` (
 -- Indexes for table `adminusers`
 --
 ALTER TABLE `adminusers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `changepasswordlinkstatus`
+--
+ALTER TABLE `changepasswordlinkstatus`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -100,6 +161,12 @@ ALTER TABLE `contestants`
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `linkstatus`
+--
+ALTER TABLE `linkstatus`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -116,25 +183,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adminusers`
 --
 ALTER TABLE `adminusers`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `changepasswordlinkstatus`
+--
+ALTER TABLE `changepasswordlinkstatus`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contestants`
 --
 ALTER TABLE `contestants`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `linkstatus`
+--
+ALTER TABLE `linkstatus`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
