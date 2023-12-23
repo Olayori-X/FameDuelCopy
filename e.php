@@ -18,8 +18,8 @@
         $mail->isSMTP();
         $mail->Host = 'vote.netcarvers.com.ng';
         $mail->SMTPAuth = true;
-        $mail->Username= 'fameduel@vote.netcarvers.com.ng';
-        $mail->Password = 'Gn=&hePO39DX';
+        $mail->Username= "email to send mail";
+        $mail->Password = 'password';
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465;
 
