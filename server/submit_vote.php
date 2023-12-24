@@ -31,7 +31,11 @@ function joke1API(){
     } else {
         $jokes =  json_decode($response);
         $joke = $jokes[0]->joke;
-        header("Location: index.php?reward=$joke&&message=Successful");
+        $message = "Successful";
+        $data = [$joke, $message];
+        header('Content-Type: application/json');
+        echo json_encode($data); 
+        // header("Location: index.php?reward=$joke&&message=Successful");
     }
 }
 
@@ -47,10 +51,18 @@ function joke2API(){
         }else{
             $joke = $jokes->joke;
         }
-        header("Location: index.php?reward=$joke&&message=Successful");
+        $message = "Successful";
+        $data = [$joke, $message];
+        header('Content-Type: application/json');
+        echo json_encode($data); 
+        // header("Location: index.php?reward=$joke&&message=Successful");
     } else {
         // Handle the error
-        header("Location: index.php?message=Successful");
+        // header("Location: index.php?message=Successful");
+        $message = "Successful";
+        $data = [$message];
+        header('Content-Type: application/json');
+        echo json_encode($data); 
     }    
 }
 
@@ -68,8 +80,11 @@ if(isset($_POST['option'])){
     if($UserQuery -> num_rows > 0){
         while($row = $UserQuery->fetch_assoc()) {
             if($row['UserName'] === $username){
-                //header("Location: Signup.php?emessage=This Username exists");
-                header("Location: index.php?message=This User has voted");
+                // header("Location: index.php?message=This User has voted");
+                $message = "This User has voted";
+                $data = [$message];
+                header('Content-Type: application/json');
+                echo json_encode($data); 
             }
             else{
                 $vote = "INSERT INTO contestants(Contestant,ContestantPic, UserName) VALUES('$value', '$image', '$username')";

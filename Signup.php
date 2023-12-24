@@ -1,6 +1,6 @@
 <?php
     if(isset($_GET['key'])&&isset($_GET['otp'])){
-        include "connect.php";
+        include "server/connect.php";
         $codedotp = md5($_GET['otp']);
         $checkotp = "SELECT * FROM linkstatus WHERE number = '$codedotp'";
         $checkquery = mysqli_query($connect, $checkotp);
@@ -54,7 +54,7 @@
         <?php if(isset($_GET['message'])){?>
           <p class="message text-danger"><?php echo $_GET['message']; ?></p>
           <?php } ?>
-          <form id="signupForm" action="createusers.php" method="post">
+          <form id="signupForm" action="server/createusers.php" method="post">
            <div class="form-group">
               <label for="email">Email</label>
               <input type="email" id="email" value = "<?php echo $_GET['key'];?>" name="email" readonly>

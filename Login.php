@@ -38,7 +38,7 @@
           <?php if(isset($_GET['message'])){?>
             <p class="message text-danger"><?php echo $_GET['message']; ?></p>
           <?php } ?>
-          <form id="loginForm" action="checkuser.php" method="post">
+          <form id="loginForm" action="server/checkuser.php" method="post">
             <div class="form-group">
               <label for="username">Username</label>
               <input type="text" id="username" name="username" class="form-control" required>

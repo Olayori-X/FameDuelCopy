@@ -86,7 +86,7 @@ if($currentDay >= 0){
     <h2 class="question" style = "text-align: center">Support your choice ✊</h2>
     <p>Tap just once on your claim to vote</p>
 
-    <form id="votingForm" action="submit_vote.php" method="post">
+    <form id="votingForm" action="server/submit_vote.php" method="post">
         <div class="row">
             <div class="col-md-6 mb-4">
                 <label class="option w-100">
@@ -178,13 +178,10 @@ if($currentDay >= 0){
 
 <?php
 } else {
-    $max = "SELECT ContestantPic,COUNT(ContestantPic) AS value_occurence FROM contestants GROUP BY ContestantPic ORDER BY value_occurence DESC LIMIT 1";
-    $confirmmax = mysqli_query($connect, $max);
+    include 'server/getwinner.php';
 
-    if($confirmmax){
-        $row = mysqli_fetch_array($confirmmax);
-        if(empty($row['ContestantPic'])){
-            echo "No one has voted";
+        if($message){
+            echo $message;
         }
         else{
             $winner = $row['ContestantPic'];
@@ -209,8 +206,7 @@ if($currentDay >= 0){
     </div>
 </footer>
 
-<?php
-        }
+<?php       
     }
 }
 ?>

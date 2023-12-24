@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
 				header("Location: Signup.php?message=This Email exists&&key=$txtEmail&&otp=$otp");
 
 			}else {
-				$sql = "INSERT INTO users (Email, Username, Password) VALUES ('$txtEmail', '$txtUsername','$txtPassword')";
+				$sql = "INSERT INTO users (Email, gamecard,  Username, Password) VALUES ('$txtEmail', 0, '$txtUsername','$txtPassword')";
 
 				// insert in database 
 				$rs = mysqli_query($connect, $sql);
@@ -44,7 +44,7 @@ if(isset($_POST['submit'])){
 			}
 		}
 	}else{
-		$sql = "INSERT INTO users (Email, Username, Password) VALUES ('$txtEmail', '$txtUsername','$txtPassword')";
+		$sql = "INSERT INTO users (Email, gamecard, rank, Username, Password) VALUES ('$txtEmail', 0, 'Novice', '$txtUsername','$txtPassword')";
 
 		// insert in database 
 		$rs = mysqli_query($connect, $sql);
