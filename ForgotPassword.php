@@ -25,7 +25,7 @@
                         <p class="message text-danger"><?php echo $_GET['message']; ?></p>
                     <?php } ?>
 
-                    <form id= "formail" action = "getEmail.php" method = "post">
+                    <form id= "formail" action = "server/getEmail.php" method = "post">
                         <div class = "form-group">
                             <label for = "email">Email</label>
                             <input type ="email" id= "email" name = "email" required><br>

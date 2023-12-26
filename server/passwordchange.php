@@ -14,10 +14,10 @@
 
 
         if(empty($pass)){
-            header("Location: changepassword.php?message=You have not input your new password&otp=$otp&key=$email");
+            header("Location: ../changepassword.php?message=You have not input your new password&otp=$otp&key=$email");
         }    
         elseif($pass != $passtwo){
-            header("Location: changepassword.php?message=The passwords do not match&otp=$otp&key=$email");
+            header("Location: ../changepassword.php?message=The passwords do not match&otp=$otp&key=$email");
         }
         else{
             $update = "UPDATE users SET Password = '$pass' WHERE Username = '$username'";
@@ -27,12 +27,12 @@
                 $updatelinkstatus = "UPDATE changepasswordlinkstatus SET used = true WHERE number = '$codedotp'";
 			    $updatequery = mysqli_query($connect, $updatelinkstatus);
 			    if($updatequery){
-				    header("Location: Login.php");
+				    header("Location: ../Login.php");
 				    exit();
 			    }
             }
         }
     }else{
-        header("Location: Login.php");
+        header("Location: ../Login.php");
     }
 ?>

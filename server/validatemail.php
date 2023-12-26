@@ -40,11 +40,11 @@
             $insertquery = mysqli_query($connect, $insertcode);
 
             if($insertquery){
-                header("Location: register.php?message=A link has been sent to your mail");
+                header("Location: ../register.php?message=A link has been sent to your mail");
             }
         }
     }else{
-        header("Location: Login.php");
+        header("Location: ../Login.php");
     }
     
 ?>

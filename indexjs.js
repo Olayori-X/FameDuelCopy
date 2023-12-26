@@ -32,7 +32,7 @@ function showMode(){
 
 
 
-document.addEventListener('DOMContentLoaded', canvas);
+// document.addEventListener('DOMContentLoaded', canvas);
 function canvas(){
     const canvas = document.getElementById('canvas');
     const canvasContext = canvas.getContext('2d');
@@ -67,7 +67,6 @@ function canvas(){
     }
 
 
-    
     canvasContext.font = '40px Rockwell';
 
     // Define the maximum width for text wrapping
@@ -146,12 +145,62 @@ function canvas(){
     // Show the "Share" and "Download" buttons
     
 
+function submitForm(){
+    console.log("hello");
+    var form = document.getElementById("votingForm");
 
+    // Get all radio buttons with the name "gender"
+    var radios = form.elements["option"];
+
+    // Loop through the radio buttons to find the selected one
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            var selectedValue = radios[i].value;
+            break; // Exit the loop once a selected radio button is found
+        }
+    }
+
+    var radioButtons = document.querySelectorAll('input[name="option"]');
+    for (var i = 0; i < radioButtons.length; i++) {
+      if (radioButtons[i].checked) {
+        contestant_image = radioButtons[i].getAttribute('data-img-src');
+        // document.getElementById("chosenimage").value = contestant_image;
+        break; // Exit the loop when the selected radio button is found
+      }
+    }
+
+    let value = {
+        'selectedUsername' : selectedValue,
+        'selectedPicture' : contestant_image,
+    }
+
+    fetch('server/submit_vote.php', {
+        "method" : "POST",
+        "headers" : {
+            "Content-Type" : "application/json; charset=utf-8"
+        },
+        "body" : JSON.stringify(value)
+    }).then(response => response.json())
+    .then(data => {
+        console.log(data);
+        canvas(data.joke);
+    })
+}
+
+
+function closeDiv(element){
+    var div = document.getElementById(element);
+    if(div.style.display == "block"){
+        div.style.display = "none";
+    }else{
+        div.style.display = "block";
+    }
+}
 
 
 
 function countvote(){
-    fetch('votecount.php', {
+    fetch('server/votecount.php', {
         method : 'GET',
         cache : 'no-cache',
     })

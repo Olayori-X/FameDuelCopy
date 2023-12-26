@@ -7,7 +7,7 @@
         $email = validate($_POST['email']);
 
         if(empty($email)){
-            header("Location: ForgotPassword?message=Email is required");
+            header("Location: ../ForgotPassword?message=Email is required");
         }
         else{
             $check = "SELECT Username FROM users WHERE Email = '$email' ";
@@ -22,21 +22,21 @@
 
         
             }else{
-                header("Location: ForgotPassword.php?message=Email does not exist");
+                header("Location: ../ForgotPassword.php?message=Email does not exist");
             }
         }
             
     }elseif(isset($_POST["username"])){
         $username = validate($_POST['username']);
         if(empty($username)){
-            header("Location: ForgotPassword.php?message=Username is required");
+            header("Location: ../ForgotPassword.php?message=Username is required");
         }
         else{
             $checkusername = "SELECT * FROM users WHERE Username = '$username' ";
             $confirmusername = mysqli_query($connect, $checkusername);
 
             if(mysqli_num_rows($confirmusername) < 1){
-                header("Location: ForgotPassword.php?message=Username does not exist");
+                header("Location: ../ForgotPassword.php?message=Username does not exist");
             }
             else{
                 session_start();
@@ -48,6 +48,6 @@
             }
         }
     }else{
-        header("Location: Login.php");
+        header("Location: ../Login.php");
     }
     ?>

@@ -50,7 +50,7 @@
                   <i class="fas fa-eye-slash password-icon" id="toggleIcon"></i>
                 </div>
             </div>
-            <button type="submit" class = "btn btn-primary">Log In</button>
+            <button type="submit" name = "submit" class = "btn btn-primary">Log In</button>
             <p class="mt-2">If you haven't created an account, <a href="Signup.php">Sign up</a> here</p>
             <p><a href="ForgotPassword.php" style="text-decoration: none;">Forgot Password?</a></p>
           </form>

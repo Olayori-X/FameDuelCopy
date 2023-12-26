@@ -37,32 +37,18 @@ if(isset($_SESSION['Username'])){
 
 
 <?php
-include "time.php";
-include "connect.php";
-include "contestants.php";
+include "server/time.php";
+include "server/connect.php";
+include "server/contestants.php";
 
 if($currentDay >= 0){
 ?>
 
-<?php if(isset($_GET['message'])){
-    $message = $_GET['message'];
-    ?>
-    <div class="alert alert-info text-center fixed-top" role="alert" id = "message" onclick = "closeDiv('message')">
-
-    <?php echo $_GET['message']; ?>
-
-    <br><button type="button" onclick = "closeDiv('message')" class="btn btn-secondary">Close</button>
-    </div>
-    <?php if( isset($_GET['reward'])){
-    $reward = $_GET['reward'];
-            
-?>
     <!-- <div class="alert alert-info text-center fixed-top" role="alert" id = "message" onclick = "closeDiv('message')"> -->
-         <div id="shareSuccess" style="display: none;">Shared successfully!</div> 
-        <div id = "centered-div" class = "container">
+        <!-- <div id = "centered-div" class = "container">
             <div class="row justify-content-center align-items-center" style="height:100vh;">
                 <div class="col-md-6">
-                    <div class = "text-center" id = "canvascontainer"><canvas class = "text-center" id = "canvas"><?php echo $reward ?></canvas></div>
+                    <div class = "text-center" id = "canvascontainer" style= "display: none;"><canvas class = "text-center" id = "canvas"></canvas></div>
                     <div class = "row">
                         <div class = "col-md-6"  id = "downloadButtonDiv">
                             <a id="downloadButton" download = 'download.jpeg' style="display: none;"><b></b>Download</b><i class="fas fa-download"></i>
@@ -75,12 +61,11 @@ if($currentDay >= 0){
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <br><button type="button" onclick = "closeDiv('message')" class="btn btn-secondary">Close</button>
+        <!-- <br><button type="button" onclick = "closeDiv('message')" class="btn btn-secondary">Close</button> -->
     <!-- </div> -->
     
-<?php } } ?>
 
 <main class="container mt-5">
     <h2 class="question" style = "text-align: center">Support your choice ✊</h2>
@@ -90,7 +75,7 @@ if($currentDay >= 0){
         <div class="row">
             <div class="col-md-6 mb-4">
                 <label class="option w-100">
-                    <input type="radio" name="option" value="<?php echo $usernames[0] ?>" data-img-src="<?php echo $images[0] ?>" onchange="submitForm()">
+                    <input type="radio" id = "option" name="option" value="<?php echo $usernames[0] ?>" data-img-src="<?php echo $images[0] ?>" onchange="submitForm()">
                     <div class="vote text-center">
                         <img src="<?php echo $images[0] ?>" class="img-fluid" alt="Picture 1">
                         <p><?php echo $usernames[0] ?></p>
@@ -153,27 +138,7 @@ if($currentDay >= 0){
 
     
 <script>
-    function submitForm() {
-      var radioButtons = document.querySelectorAll('input[name="option"]');
-      for (var i = 0; i < radioButtons.length; i++) {
-        if (radioButtons[i].checked) {
-          contestant_image = radioButtons[i].getAttribute('data-img-src');
-          document.getElementById("chosenimage").value = contestant_image;
-          break; // Exit the loop when the selected radio button is found
-        }
-    }
-      document.getElementById('votingForm').submit();
-    }
-    function closeDiv(element){
-      var div = document.getElementById(element);
-      if(div.style.display == "block"){
-        div.style.display = "none";
-      }else{
-        div.style.display = "block";
-      }
-    }
-    
-    countvote();
+    setInterval(countvote, 3000);
 </script>
 
 <?php

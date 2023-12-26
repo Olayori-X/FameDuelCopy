@@ -1,6 +1,6 @@
 <?php
-    include 'connect.php';
-    include 'validate.php';
+    include 'server/connect.php';
+    include 'server/validate.php';
     if(isset($_GET['key'])&&isset($_GET['otp'])){
         $key = $_GET['key'];
         $codedotp = md5($_GET['otp']);
@@ -72,7 +72,7 @@
                        <p class="message text-danger"><?php echo $_GET['message']; ?></p>
                     <?php } ?>
 
-                        <form id = "" action = "passwordchange.php" method = "POST">
+                        <form id = "" action = "server/passwordchange.php" method = "POST">
                             
                             <div class = "form-group">
                                 <label>New Password</label><br>

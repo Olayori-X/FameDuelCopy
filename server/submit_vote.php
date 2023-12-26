@@ -27,12 +27,22 @@ function joke1API(){
     curl_close($curl);
 
     if ($err) {
-        header("Location: index.php?message=Successful");
+        // header("Location: index.php?message=Successful");
+        $message = "Successful";
+        $data = [
+            'message' => $message
+        ];
+        header('Content-Type: application/json');
+        echo json_encode($data); 
     } else {
         $jokes =  json_decode($response);
         $joke = $jokes[0]->joke;
         $message = "Successful";
-        $data = [$joke, $message];
+        // $data = [$joke, $message];
+        $data = [
+            'message' => $message,
+            'joke' => $joke
+        ];
         header('Content-Type: application/json');
         echo json_encode($data); 
         // header("Location: index.php?reward=$joke&&message=Successful");
@@ -52,7 +62,10 @@ function joke2API(){
             $joke = $jokes->joke;
         }
         $message = "Successful";
-        $data = [$joke, $message];
+        $data = [
+            'message' => $message,
+            'joke' => $joke
+        ];
         header('Content-Type: application/json');
         echo json_encode($data); 
         // header("Location: index.php?reward=$joke&&message=Successful");
@@ -60,7 +73,9 @@ function joke2API(){
         // Handle the error
         // header("Location: index.php?message=Successful");
         $message = "Successful";
-        $data = [$message];
+        $data = [
+            'message' => $message
+        ];
         header('Content-Type: application/json');
         echo json_encode($data); 
     }    
@@ -68,11 +83,15 @@ function joke2API(){
 
 $functionarray = ['joke1API', 'joke2API'];
 
-if(isset($_POST['option'])){
+// if(isset($_POST['option'])){
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
     include 'validate.php';
 
-    $value = validate($_POST['option']);
-    $image = $_POST['chosenimage'];
+    $data = file_get_contents("php://input");
+	$values = json_decode($data, true);
+
+    $value = $values['selectedUsername'];
+    $image = $values['selectedPicture'];
 
     $UserVerification = "SELECT UserName FROM contestants WHERE UserName = '$username'";
     $UserQuery = mysqli_query($connect, $UserVerification);
@@ -107,6 +126,6 @@ if(isset($_POST['option'])){
     }
 
 }else{
-    header("Location: Login.php");
+    header("Location: ../Login.php");
 }
 ?>

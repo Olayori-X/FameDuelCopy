@@ -24,7 +24,7 @@
             <?php if(isset($_GET['message'])){?>
               <p class = "message"><?php echo $_GET['message']; ?></p>
             <?php } ?>
-            <form id="signupForm" action="validatemail.php" method="post">
+            <form id="signupForm" action="server/validatemail.php" method="post">
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" id="email" name="email" required>

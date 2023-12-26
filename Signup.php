@@ -61,6 +61,11 @@
             </div>
 
             <div class="form-group">
+              <label for="file" class="d-block">Profile Picture</label>
+              <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event);" class="form-control-file" required>
+            </div>
+
+            <div class="form-group">
               <label for="username">Username</label>
               <input type="text" id="username" name="username" required>
             </div>
@@ -96,19 +101,24 @@
 
 <script>
     const passwordInput = document.getElementById('password');
-        const toggleIcon = document.getElementById('toggleIcon');
+    const toggleIcon = document.getElementById('toggleIcon');
 
-        toggleIcon.addEventListener('click', () => {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            }
-        });
+    toggleIcon.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        }
+    });
+
+    var loadFile = function(event) {
+      var image = document.getElementById('output');
+      image.src = URL.createObjectURL(event.target.files[0]);
+    };
 </script>
 </body>
 </html>
