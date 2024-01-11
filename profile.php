@@ -7,6 +7,7 @@ if(isset($_SESSION['Username'])){
   include "server/connect.php";
 
   include "server/getspecificdetails.php";
+  //Use fetch JS
 ?>
 <!DOCTYPE html>
 <html lang="en">

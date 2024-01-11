@@ -1,10 +1,17 @@
 <?php
-    session_start();
+    // session_start();
 
-    if(isset($_SESSION['Username'])){
-        $username = $_SESSION['Username'];
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+        include 'validate.php';
 
-        include "connect.php";
+        $data = file_get_contents("php://input");
+	    $values = json_decode($data, true);
+
+        $username = validate($values['username']);
+
+        // $username = $_SESSION['Username'];
+
+        include "server/connect.php";
 
         $users = "SELECT * FROM users WHERE Username = '$username'";
         $usersquery = mysqli_query($connect, $users);
@@ -15,7 +22,7 @@
                 unset($row['Password']);
                 $data[] = $row;
             }
-            
+
             header("Content-Type: application/json");
             echo json_encode($data);
         }

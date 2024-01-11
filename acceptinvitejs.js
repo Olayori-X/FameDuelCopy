@@ -5,7 +5,8 @@ fetch('server/checkinvites.php')
     console.log(data.data[1].contestid);
     var hello = '';
     for($i=0; $i < data.length; $i++){
-        hello += "<input type = 'hidden'  value = '" + data.data[1].contestid + "' id = " + data.data[1].contestid + "'>"
+        hello += "<input type = 'hidden'  value = '" + data.data[1].contestid + "' id = " + data.data[1].contestid + "'>";
+        //Continue the code to fetch invites
     }
 })
 
