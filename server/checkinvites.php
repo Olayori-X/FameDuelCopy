@@ -1,11 +1,16 @@
 <?php
-    session_start();
 
-    if(isset($_SESSION['Username'])){
-      $username = $_SESSION['Username'];
-      include "connect.php";
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        include "connect.php";
+        include "validate.php";
 
-        $isinvited = "SELECT * FROM othercontests WHERE inviteename = '$username'";
+        $data = file_get_contents("php://input");
+	    $values = json_decode($data, true);
+
+        $username = validate($values['current_username']);
+      
+
+        $isinvited = "SELECT * FROM othercontests WHERE inviteename = '$username' AND accepted = false";
         $invitequery = mysqli_query($connect, $isinvited);
     
         if($invitequery){
@@ -13,11 +18,9 @@
             while($row = mysqli_fetch_assoc($invitequery)){
                 $invites[] = $row;
             }
-            $data = [
-            'data' => $invites
-            ];
+
             header("Content-Type: application/json");
-            echo json_encode($data);
+            echo json_encode($invites);
         }
     }
 ?>

@@ -1,11 +1,8 @@
 <?php
-// session_start();
 
 include 'connect.php';
 
 
-
-// if (isset($_POST['submit'])) {
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 	include 'validate.php';
 
@@ -15,18 +12,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $username = validate($values['username']);
 	$password = md5(validate($values['password']));
 
-	// $username = validate($_POST['username']);
-	// $password = md5(validate($_POST['password']));
-
 	if (empty($username)){
-		// header("Location: ../Login.php?message=Username is required");
-		// exit();
         $response = [
             'message' => 'Username is required'
         ];
 	}else if(empty($password)) {
-		// header("Location: ../Login.php?message=Password is required");
-		// exit();
         $response = [
             'message' => 'Password is required'
         ];
@@ -38,23 +28,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$row = mysqli_fetch_assoc($SQLpass);
 
 			if($row['Password'] === $password){
-				// $_SESSION['Username'] = $row['Username'];
-				// header("Location: ../index.php");
-				// exit();
                 $response = [
                     'message' => 'Success'
                 ];
-			}else{
-				// header("Location: ../Login.php?message=Incorrect Password");
-				// exit();	
+			}else{	
                 $response = [
                     'message' => 'Incorrect Password'
                 ];
 			}
 
-		}else{
-			// header("Location: ../Login.php?message=Incorrect Username");
-			// exit();	
+		}else{	
             $response = [
                 'message' => 'Incorrect Username'
             ];

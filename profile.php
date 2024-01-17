@@ -1,12 +1,12 @@
 <?php
-session_start();
+// session_start();
 
-if(isset($_SESSION['Username'])){
-  $username = $_SESSION['Username'];
+// if(isset($_SESSION['Username'])){
+//   $username = $_SESSION['Username'];
 
-  include "server/connect.php";
+//   include "server/connect.php";
 
-  include "server/getspecificdetails.php";
+//   include "server/getspecificdetails.php";
   //Use fetch JS
 ?>
 <!DOCTYPE html>
@@ -28,10 +28,31 @@ if(isset($_SESSION['Username'])){
 </head>
 <body>
     <img src = "<?php echo $data[0]['profilepic']; ?>"/><br>
-    <p><?php echo $data[0]['Username']; ?></p>
+    <p id = "image"><?php echo $data[0]['Username']; ?></p>
 </body>
+
+<script>
+  value = {
+      "current_username" : 'Olayori',
+  };
+
+  fetch('server/getspecificdetails.php', {
+      'method' : 'POST',
+      "headers" : {
+          "Content-Type" : "application/json; charset=utf-8"
+      },
+      "body" : JSON.stringify(value)
+  }).then(response => response.json())
+  .then(data => {
+      console.log(data);
+      //Work on the data here
+      document.getElementById('image').innerHTML = "<img src ='" + data.userprofile[0].profilepic + "'>";
+  })
+
+</script>
 </html>
 
-<?php }else{
-  header("Location: Login.php"); 
-}?>
+<?php 
+// }else{
+  // header("Location: Login.php"); 
+// }?>

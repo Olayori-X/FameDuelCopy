@@ -1,12 +1,3 @@
-<?php
-session_start();
-
-if(isset($_SESSION['Username'])){
-  $username = $_SESSION['Username'];
-
-  include "server/connect.php";
-  include "server/getspecificdetails.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,8 +17,6 @@ if(isset($_SESSION['Username'])){
 
 </head>
 <body>
-    <input type = 'hidden' value = 'contest1' id = 'contestid'>
-    <input type = "hidden" value = "<?php echo $data[0]['profilepic']; ?>" id = "inviteepic">
 
     <button type = "button" onclick = "acceptinvite()">Accept invite</button>
     <button type = "button" onclick = "deleteinvite()">Delete invite</button>
@@ -37,7 +26,3 @@ if(isset($_SESSION['Username'])){
     </script>
 </body>
 </html>
-
-<?php }else{
-  header("Location: Login.php"); 
-}?>

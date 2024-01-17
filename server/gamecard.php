@@ -12,23 +12,25 @@
         if($getwinnersquery){
             $votersforwinner = [];
             while($row = mysqli_fetch_assoc($getwinnersquery)){
-                $votersforwinner[] = $row['UserName'];
+                $votersforwinner[] = $row;
             }
 
             for($i=0; $i < count($votersforwinner); $i++){
                 $updategamecard = "UPDATE users SET gamecard = gamecard + 1 WHERE Username = '$votersforwinner[i]'";
             }
+
+            $updategamecardforwinner = "UPDATE users SET gamecard = gamecard + 10 WHERE Username = '$winner[i]'";
         }
 
-        if($getlosersquery){
-            $votersforloser = [];
-            while($row = mysqli_fetch_assoc($getlosersquery)){
-                $votersforloser[] = $row['UserName'];
-            }
+        // if($getlosersquery){
+        //     $votersforloser = [];
+        //     while($row = mysqli_fetch_assoc($getlosersquery)){
+        //         $votersforloser[] = $row['UserName'];
+        //     }
 
-            for($i=0; $i < count($votersforloser); $i++){
-                $updategamecard = "UPDATE users SET gamecard = gamecard + 1 WHERE Username = '$votersforloser[i]'";
-            }
-        }
+        //     for($i=0; $i < count($votersforloser); $i++){
+        //         $updategamecard = "UPDATE users SET gamecard = gamecard - 1 WHERE Username = '$votersforloser[i]'";
+        //     }
+        // }
     }
 ?>

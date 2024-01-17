@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test follow functionality</title>
+    </head>
+    <body>
+        <button type = "button" onclick = "followuser()">Follow</button>
+    </body>
+
+    <script>
+        function followuser() {
+            value = {
+                "userfollowing" : 'User 1',
+                "followeduser" : 'User 2',
+            };
+
+            fetch('server/followuser.php', {
+                'method' : 'POST',
+                "headers" : {
+                    "Content-Type" : "application/json; charset=utf-8"
+                },
+                "body" : JSON.stringify(value)
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                //Work on the data here
+            })
+        }
+    </script>
+</html>

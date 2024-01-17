@@ -1,6 +1,7 @@
 <?php
     include "connect.php";
     include "validate.php";
+    include "time.php";
 
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -8,11 +9,32 @@
 	    $values = json_decode($data, true);
 
         $contestid = validate($values['contestid']);
-        $inviteepic = validate($values['inviteepic']);
-        // $invited = validate($values['inviteduser']);
+        $invited = validate($values['inviteduser']);
 
+        //get invited picture
+        $getinviteepic = "SELECT * FROM users WHERE Username = '$invited'";
+        $getinviteepicquery = mysqli_query($connect, $getinviteepic);
 
-        $acceptinvite = "UPDATE othercontests SET inviteepic = '$inviteepic', accepted = true WHERE contestid = '$contestid'";
+        if($getinviteepicquery){
+            if(mysqli_num_rows($getinviteepicquery) > 0){
+                $inviteepic = [];
+                while($row = mysqli_fetch_assoc($getinviteepicquery)){
+                    $inviteepic[] = $row['profilepic'];
+                }
+            }
+        }
+
+        $getcontesttime = "SELECT contest_time FROM othercontests WHERE contestid = '$contestid'";
+        $getcontesttimequery = mysqli_query($connect, $getcontesttime);
+
+        if($getcontesttimequery){
+            $row = mysqli_fetch_assoc($getcontesttimequery);
+            $setcontesttime = $row['contest_time'];
+        }
+
+        $contestendsin = date('H:i', strtotime($setcontesttime));
+
+        $acceptinvite = "UPDATE othercontests SET inviteepic = '$inviteepic', accepted = true, day = '$currentDay', time = '$time', contest_time = '$contestendsin' WHERE contestid = '$contestid'";
         $acceptquery = mysqli_query($connect, $acceptinvite);
 
         if($acceptquery){
@@ -27,12 +49,15 @@
 
             if($createquery){
                 $message = [
-                    'statusCode' => '200'
+                    'message' => 'Successful'
                 ];
                 header('Content-Type: application/json');
                 echo json_encode($message); 
             }
         }else{
+            $message = [
+                'message' => 'Error'
+            ];
             header('Content-Type: application/json');
             echo json_encode('message');
         }
