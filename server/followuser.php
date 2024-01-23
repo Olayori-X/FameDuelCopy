@@ -7,8 +7,21 @@
         $data = file_get_contents("php://input");
 	    $values = json_decode($data, true);
 
-        $userfollowing = validate($values['userfollowing']);
-        $followeduser = validate($values['followeduser']);
+        $userfollowing = validate($values['userid']);
+        $followedusername = validate($values['followeduser']);
+
+        //get invitee id
+        $getfolloweduserprofile = "SELECT * FROM users WHERE Username = '$followedusername'";
+        $getfolloweduserprofilequery = mysqli_query($connect, $getfolloweduserprofile);
+
+        if($getfolloweduserprofilequery){
+            if(mysqli_num_rows($getfolloweduserprofilequery) > 0){
+                $followeduser = [];
+                while($row = mysqli_fetch_assoc($getfolloweduserprofilequery)){
+                    $followeduser[] = $row['userid'];
+                }
+            }
+        }
 
         $checkfollow = "SELECT followeduser FROM followusers WHERE userfollowing = '$userfollowing'";
         $checkquery = mysqli_query($connect, $checkfollow);

@@ -28,9 +28,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$row = mysqli_fetch_assoc($SQLpass);
 
 			if($row['Password'] === $password){
-                $response = [
-                    'message' => 'Success'
-                ];
+                unset($row['Password']);
+                unset($row['id']);
+
+                $response = $row;
+
 			}else{	
                 $response = [
                     'message' => 'Incorrect Password'

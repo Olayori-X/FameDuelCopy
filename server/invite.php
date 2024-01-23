@@ -8,9 +8,9 @@
         $data = file_get_contents("php://input");
 	    $values = json_decode($data, true);
 
-        $challenger = validate($values['challenger']);
+        $challenger = validate($values['userid']);
         
-        $invited = validate($values['inviteduser']);
+        $invitedname = validate($values['inviteduser']);
         
         $contest_time = validate($values['time']);
 
@@ -27,13 +27,26 @@
             }
         }
 
+        //get invitee id
+        $getinviteeprofile = "SELECT * FROM users WHERE Username = '$invitedname'";
+        $getinviteeprofilequery = mysqli_query($connect, $getinviteeprofile);
+
+        if($getinviteeprofilequery){
+            if(mysqli_num_rows($getinviteeprofilequery) > 0){
+                $invited = [];
+                while($row = mysqli_fetch_assoc($getinviteeprofilequery)){
+                    $invited[] = $row['userid'];
+                }
+            }
+        }
+
 
         $getcontestid = "SELECT contestid FROM othercontests ORDER BY id DESC LIMIT 1";
         $getquery = mysqli_query($connect, $getcontestid);
 
         if($getquery){
             $row = mysqli_fetch_assoc($getquery);
-            $data = $row['contestid'] + 1;
+            $data = $row['id'] + 1;
             $contestid = "contest" . $data;
         }
 

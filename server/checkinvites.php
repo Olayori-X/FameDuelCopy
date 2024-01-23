@@ -7,10 +7,10 @@
         $data = file_get_contents("php://input");
 	    $values = json_decode($data, true);
 
-        $username = validate($values['current_username']);
+        $userid = validate($values['userid']);
       
 
-        $isinvited = "SELECT * FROM othercontests WHERE inviteename = '$username' AND accepted = false";
+        $isinvited = "SELECT * FROM othercontests WHERE inviteename = '$userid' AND accepted = false";
         $invitequery = mysqli_query($connect, $isinvited);
     
         if($invitequery){

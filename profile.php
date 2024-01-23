@@ -15,8 +15,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fun Duel🏆 </title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
   <link rel="icon" href="assets/favicon.png" type="image/png">
     <meta property="og:title" content="Fun Duel🏆">
     <meta property="og:description" content="Support your choice✊. Emerge  Victorious🏆">
@@ -27,13 +27,12 @@
 
 </head>
 <body>
-    <img src = "<?php echo $data[0]['profilepic']; ?>"/><br>
-    <p id = "image"><?php echo $data[0]['Username']; ?></p>
+    <p id = "image"></p>
 </body>
 
 <script>
   value = {
-      "current_username" : 'Olayori',
+      "current_username" : 'User1',
   };
 
   fetch('server/getspecificdetails.php', {
@@ -46,7 +45,7 @@
   .then(data => {
       console.log(data);
       //Work on the data here
-      document.getElementById('image').innerHTML = "<img src ='" + data.userprofile[0].profilepic + "'>";
+      document.getElementById('image').innerHTML = "<img src ='server/" + data.userprofile[0].profilepic + "'>";
   })
 
 </script>

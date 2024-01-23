@@ -6,10 +6,45 @@
 </head>
 <body>
     <div id = 'showcontest'></div>
+    <div id="messages"></div>
 </body>
 
 <script>
-    fetch('server/viewcontests.php')
+
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.addEventListener('open', (event) => {
+        console.log('WebSocket connection opened:', event);
+    });
+
+    socket.addEventListener('message', (event) => {
+        const messageData = JSON.parse(event.data);
+        console.log(messageData.contestlists);
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML += `<p>${messageData.contestlists[0].accepted}</p>`;
+    });
+
+    socket.addEventListener('close', (event) => {
+        console.log('WebSocket connection closed:', event);
+    });
+
+    function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const message = messageInput.value;
+        socket.send(message);
+        messageInput.value = '';
+    }
+
+    value = {
+        'userid' : document.getElementById('userid').value
+    }
+fetch('server/viewcontests.php', {
+    'method' : 'POST',
+    "headers" : {
+        "Content-Type" : "application/json; charset=utf-8"
+    },
+    "body" : JSON.stringify(value)
+})
     .then(response => response.json())
     .then(data =>
         console.log(data)

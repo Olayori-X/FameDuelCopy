@@ -119,6 +119,25 @@
       var image = document.getElementById('output');
       image.src = URL.createObjectURL(event.target.files[0]);
     };
+
+    //Function to send sign up data
+    function submitForm() {
+      var formData = new FormData(document.getElementById('signupForm'));
+
+      fetch('server/register_user.php', {
+          method: 'POST',
+          body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              alert('Sign up successful! User ID: ' + data.userId);
+          } else {
+              alert('Sign up failed: ' + data.message);
+          }
+      })
+      .catch(error => console.error('Error:', error));
+    }
 </script>
 </body>
 </html>

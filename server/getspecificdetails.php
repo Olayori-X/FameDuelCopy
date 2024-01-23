@@ -11,8 +11,8 @@
         $user = validate($values['current_username']);
 
         
-        $followcurrentuser = "SELECT followeduser FROM followusers WHERE followeduser = '$user'"; //following current user
-        $currentuserfollowing = "SELECT userfollowing FROM followusers WHERE userfollowing = '$user'"; //current user following
+        $followcurrentuser = "SELECT userfollowing FROM followuser WHERE followeduser = '$user'"; //following current user
+        $currentuserfollowing = "SELECT followeduser FROM followuser WHERE userfollowing = '$user'"; //current user following
 
         $followcurrentuserquery = mysqli_query($connect, $followcurrentuser); //follow current user
         $currentuserfollowingquery = mysqli_query($connect, $currentuserfollowing); //current user following
@@ -22,7 +22,7 @@
             if(mysqli_num_rows($followcurrentuserquery) >= 0){
                 $followcurrentuserarray = [];
                 while($row = mysqli_fetch_assoc($followcurrentuserquery)){
-                    $followcurrentuserarray[] = $row['followeduser']; //people following current user
+                    $followcurrentuserarray[] = $row['userfollowing']; //people following current user
                 }
             }
         }
@@ -31,14 +31,14 @@
             if(mysqli_num_rows($currentuserfollowingquery) >= 0){
                 $currentuserfollowingarray = [];
                 while($row = mysqli_fetch_assoc($currentuserfollowingquery)){
-                    $currentuserfollowingarray[] = $row['userfollowing']; //current user following
+                    $currentuserfollowingarray[] = $row['followeduser']; //current user following
                 }
             }
         }
         //array values end here
 
-        $followcurrentusercount = "SELECT COUNT(followeduser) as followeduser FROM followusers WHERE followeduser = '$user'"; // number of people following current user count
-        $currentuserfollowingcount = "SELECT COUNT(userfollowing) as userfollowing FROM followusers WHERE userfollowing = '$user'"; //current user following count
+        $followcurrentusercount = "SELECT COUNT(userfollowing) as userfollowing FROM followuser WHERE followeduser = '$user'"; // number of people following current user count
+        $currentuserfollowingcount = "SELECT COUNT(followeduser) as followeduser FROM followuser WHERE userfollowing = '$user'"; //current user following count
 
 
         $followcurrentusercountquery = mysqli_query($connect, $followcurrentusercount); //number of people following current user
@@ -48,21 +48,21 @@
         if($currentuserfollowingcountquery){
             if(mysqli_num_rows($currentuserfollowingcountquery) > 0){
                 $row = mysqli_fetch_assoc($currentuserfollowingcountquery);
-                $currentuserfollowingcounts = $row['userfollowing']; //current user following count
+                $currentuserfollowingcounts = $row['followeduser']; //current user following count
             }
         }
 
         if($followcurrentusercountquery){
             if(mysqli_num_rows($followcurrentusercountquery) > 0){
                 $row = mysqli_fetch_assoc($followcurrentusercountquery);
-                $followcurrentusercounts = $row['followeduser']; //number of people following current user
+                $followcurrentusercounts = $row['userfollowing']; //number of people following current user
             }
         }
         //count variables end here
 
 
 
-        $users = "SELECT * FROM users WHERE Username = '$user'";
+        $users = "SELECT * FROM users WHERE userid = '$user'";
         $usersquery = mysqli_query($connect, $users);
 
         if($usersquery){

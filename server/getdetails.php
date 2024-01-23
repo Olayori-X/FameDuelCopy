@@ -8,6 +8,8 @@
   if($usersquery){
     $data = [];
     while($row = mysqli_fetch_assoc($usersquery)){
+        unset($row['Password']);
+        unset($row['id']);
         $data[] = $row;
     }
     header("Content-Type: application/json");

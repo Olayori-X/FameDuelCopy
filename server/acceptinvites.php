@@ -9,10 +9,10 @@
 	    $values = json_decode($data, true);
 
         $contestid = validate($values['contestid']);
-        $invited = validate($values['inviteduser']);
+        $invited = validate($values['userid']);
 
         //get invited picture
-        $getinviteepic = "SELECT * FROM users WHERE Username = '$invited'";
+        $getinviteepic = "SELECT * FROM users WHERE userid = '$invited'";
         $getinviteepicquery = mysqli_query($connect, $getinviteepic);
 
         if($getinviteepicquery){
