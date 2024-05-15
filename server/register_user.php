@@ -6,42 +6,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 	include 'connect.php';
 	include "validate.php";
 
-	function sendmail($email){		
-		require 'phpmailer/src/Exception.php';
-		require 'phpmailer/src/PHPMailer.php';
-		require 'phpmailer/src/SMTP.php';
-
-		$mail = new PHPMailer(true);
-
-        $mail->isSMTP();
-        $mail->Host = 'vote.netcarvers.com.ng';
-        $mail->SMTPAuth = true;
-        $mail->Username= "email to send mail";
-        $mail->Password = 'password';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
-
-        $mail->setFrom('fameduel@vote.netcarvers.com.ng');
-
-        $mail->addAddress($email);
-
-        $mail->isHTML(true);
-
-        $mail->Subject = "Verify your account";
-        $mail->Body = "Click <a href = 'localhost/FameDuel/Signup.php?key=$email>here</a> to continue registration";
-
-        if($mail->send()){
-            $codedotp = md5($otp);
-            $insertcode = "INSERT INTO linkstatus(number, used) VALUES('$codedotp', false)";
-            $insertquery = mysqli_query($connect, $insertcode);
-
-            if($insertquery){
-                header("Location: ../register.php?message=A link has been sent to your mail");
-            }
-        }
-	}
-
-	$txtfirstName = $_POST['firNme'];
+	$txtfirstName = $_POST['firstName'];
 	$txtlastName = $_POST['lasNme'];
 	$txtPhone = $_POST['phnNo'];
 	$txtEmail = validate($_POST['email']);
@@ -50,8 +15,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 	$txtCity = $_POST['city'];
 	$txtPassword = md5(validate($_POST['password']));
 	$txtUsername = validate($_POST['username']);
-	$codedotp = md5(validate($_POST['otp']));
-	$otp = validate($_POST['otp']);
+	
 
 	$getlastuserid = "SELECT userid FROM users ORDER BY id DESC LIMIT 1";
 	$getquery = mysqli_query($connect, $getlastuserid);
@@ -62,72 +26,101 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 		$userid = "user" . $data;
 	}
 
-	$UserVerification = "SELECT * FROM users WHERE Username = '$txtUsername' OR Email = '$txtEmail'";
-	$UserQuery = mysqli_query($connect, $UserVerification);
+	$UserVerification = "SELECT * FROM users WHERE Username = ? OR Email = ?";
+	$prepareverificationstmt = mysqli_prepare($connect, $UserVerification);
 
-	if($UserQuery -> num_rows > 0){
-		while($row = $UserQuery->fetch_assoc()) {
-			if($row['Username'] === $txtUsername){
-				$message = ['message' => 'This username exists'];
+	mysqli_stmt_bind_param($prepareverificationstmt, "ss", $txtUsername, $txtEmail);
+	$executeverificationstmt = mysqli_stmt_execute($prepareverificationstmt);
+	if($executeverificationstmt){
+		$UserQuery = mysqli_stmt_get_result($prepareverificationstmt);
 
-			}elseif($row['Email'] === $txtEmail){
-				$message = ['message' => 'This email exists'];
-
-			}else {
-				$sql = "INSERT INTO users (Email, gamecard,  Username, Password) VALUES ('$txtEmail', 0, '$txtUsername','$txtPassword')";
-
-				// insert in database 
-				$rs = mysqli_query($connect, $sql);
-
-				if($rs){
-				    sendmail($email);
-				}
-			}
-		}
-	}else{
-		if($_POST['image']){
-			$target_dir = "C:/Xampp/htdocs/FameDuel/uploads/";
-			$target_file = $target_dir . basename($_FILES["image"]["name"]);
-			$uploadOk = 1;
-			$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-			// Check if image file is a actual image or fake image
-			$check = getimagesize($_FILES["image"]["tmp_name"]);
-			if($check == false) {
-				$message = ["message" => "File is not an image."];
-			} else {
-				$uploadOk = 1;
-				if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-					$image = "server/uploads/" . basename($_FILES["image"]["name"]);
-					$sql = "INSERT INTO users (userid, Email, gamecard, rank, Username, profilepic, Password) VALUES ('$userid', '$txtEmail', 0, 'Novice', '$txtUsername', '$image','$txtPassword')";
-
+		if($UserQuery -> num_rows > 0){
+			while($row = $UserQuery->fetch_assoc()) {
+				if($row['Username'] === $txtUsername){
+					$message = [
+						'response' => 'error',
+						'message' => 'This username exists'
+					];
+	
+				}elseif($row['Email'] === $txtEmail){
+					$message = [
+						'response' => 'error',
+						'message' => 'This email exists'
+					];
+	
+				}else {
+					$sql = "INSERT INTO users (email, gamecard,  username, password, status) VALUES ('$txtEmail', 0, '$txtUsername','$txtPassword')";
+	
 					// insert in database 
 					$rs = mysqli_query($connect, $sql);
-
+	
 					if($rs){
-						$updatelinkstatus = "UPDATE linkstatus SET used = true WHERE number = '$codedotp'";
-						$updatequery = mysqli_query($connect, $updatelinkstatus);
-						if($updatequery){
-							header("Location: ../Login.php");
-							exit();
-						}
-					}																																				
-				} else {
-					$message = ["message" => "Sorry, there was an error uploading your file."];
+						// sendmail($email);
+					}
 				}
 			}
 		}else{
-			$sql = "INSERT INTO users (userid, Email, gamecard, rank, Username, Password) VALUES ('$userid', '$txtEmail', 0, 'Novice', '$txtUsername','$txtPassword')";
-
-			// insert in database 
-			$rs = mysqli_query($connect, $sql);
-
-			if($rs){
-				sendmail($email);
+			require 'phpmailer/src/Exception.php';
+			require 'phpmailer/src/PHPMailer.php';
+			require 'phpmailer/src/SMTP.php';
+	
+			$min = 100000000000000;  // 10-digit number with all digits being 0
+			$max = 999999999999999;  // 10-digit number with all digits being 9
+			$otp = random_int($min, $max);
+			$code = md5($otp);
+	
+			$mail = new PHPMailer(true);
+	
+			$mail->isSMTP();
+			$mail->Host = 'vote.netcarvers.com.ng';
+			$mail->SMTPAuth = true;
+			$mail->Username= "email to send mail";
+			$mail->Password = 'password';
+			$mail->SMTPSecure = 'ssl';
+			$mail->Port = 465;
+	
+			$mail->setFrom('fameduel@vote.netcarvers.com.ng');
+	
+			$mail->addAddress($email);
+	
+			$mail->isHTML(true);
+	
+			$mail->Subject = "Verify your account";
+			$mail->Body = "The code to verify your fameduel account is $otp. <br>Do not share with anyone.";
+	
+			if($mail->send()){
+				$sql = "INSERT INTO users (userid, Email, gamecard, username, password, code, verified) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				$verified = false;
+				$gamecard = 0;
+	
+				// Prepare the statement
+				$stmt = mysqli_prepare($connect, $sql);
+	
+				// Bind parameters to the prepared statement
+				mysqli_stmt_bind_param($stmt, "ssisssi", $userid, $txtEmail, $gamecard, $txtUsername, $txtPassword, $code, $verified);
+		
+				// Execute the prepared statement
+				$rs = mysqli_stmt_execute($stmt);
+	
+	
+				if($rs){
+					$response = [
+						'response' => 'successful',
+						'userid' => $userid
+					];
+				}
+			}else{
+				$response = [
+					'response' => 'error',
+					'message' => 'Sending the mail was not successful. Try again later'
+				];
 			}
 		}
 	}
+
+
+	header('Content-Type: application/json');
+    echo json_encode($response); 
 }else{
 	header("Location: ../Signup.php");
 }
-?>

@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     //array values end here
 
     $message = [
-        'response' => "Successful",
+        'response' => "successful",
         'userlikescounts' => $userlikescounts,
         'userlikes' => $userlikesarray,
     ];

@@ -1,51 +1,52 @@
 <?php
+//This code validates if an email or a username input ny the user is correct, if they want to change their password
     include 'connect.php';
     include "validate.php";
     
-    if(isset($_POST["email"])){
-        $email = validate($_POST['email']);
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
+        $values = json_decode(file_get_contents("php://input"), true);
 
-        if(empty($email)){
-            header("Location: ../ForgotPassword?message=Email is required");
+        $userinput = validate($values['userinput']);
+
+        if(empty($userinput)){
+            $response = [
+                "response" => "Error",
+                "message" => "User need to input their username or email"
+            ];
         }
         else{
-            $check = "SELECT Username FROM users WHERE Email = '$email' ";
+            $check = "SELECT * FROM users WHERE username = ? OR email = ?";
 
-            $confirm = mysqli_query($connect, $check);
+            $preparecheckstmt = mysqli_prepare($connect, $check);
+            mysqli_stmt_bind_param($preparecheckstmt, "s", $userinput);
 
-            if (mysqli_num_rows($confirm) >= 1) {
-                $username = [];
-                session_start();
-                $_SESSION['Email'] = $email;
-                header("Location: e.php");
+            $executecheckstmt = mysqli_stmt_execute($preparecheckstmt);
+            if($executecheckstmt){
+                $confirm = mysqli_stmt_get_result($preparecheckstmt);
 
-        
-            }else{
-                header("Location: ../ForgotPassword.php?message=Email does not exist");
-            }
-        }
-            
-    }elseif(isset($_POST["username"])){
-        $username = validate($_POST['username']);
-        if(empty($username)){
-            header("Location: ../ForgotPassword.php?message=Username is required");
-        }
-        else{
-            $checkusername = "SELECT * FROM users WHERE Username = '$username' ";
-            $confirmusername = mysqli_query($connect, $checkusername);
-
-            if(mysqli_num_rows($confirmusername) < 1){
-                header("Location: ../ForgotPassword.php?message=Username does not exist");
-            }
-            else{
-                session_start();
-                while($row = mysqli_fetch_array($confirmusername)){
-                    $_SESSION['Email'] = $row['Email'];
+                if (mysqli_num_rows($confirm) >= 1) {
+                    
+                    while($row = mysqli_fetch_assoc($confirm)){
+                        unset($row['id']);
+                        unset($row['password']);
+                        
+                        $response = [
+                            "response" => "Successful",
+                            "data" => $row
+                        ];
+                    }       
+                }else{
+                    $response = [
+                        "response" => "Error",
+                        "message" => "Account does not exist"
+                    ];
                 }
-                header("Location: e.php");
-            }
+            }            
         }
+
+        header('Content-Type: application/json');
+        echo json_encode($response); 
+            
     }else{
         header("Location: ../Login.php");
     }
-    ?>
