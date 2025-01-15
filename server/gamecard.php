@@ -1,4 +1,5 @@
 <?php
+//Thic code works for the general contests after the winner has been selected. So it updates the gamecard respectively
     include 'getwinner.php';
     include 'connect.php';
 

@@ -1,9 +1,7 @@
 <?php
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $data = file_get_contents("php://input");
-    $values = json_decode($data, true);
+if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
-    $contestid = validate($values['contestid']);
+    $contestid = validate($_GET['contestid']);
 
     $userlikescount = "SELECT COUNT(userliking) as userliking FROM likedcontests WHERE contestid = '$contestid'"; // number of people liking a contest
 
@@ -58,4 +56,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     header('Content-Type: application/json');
     echo json_encode($message); 
+}else{
+    http_response_code(405);
 }

@@ -1,14 +1,14 @@
 <?php
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if($_SERVER['REQUEST_METHOD'] === 'GET'){
         
         include "connect.php";
         include "validate.php";
 
-        $data = file_get_contents("php://input");
-        $values = json_decode($data, true);
+        // $data = file_get_contents("php://input");
+        // $values = json_decode($data, true);
 
-        $user = validate($values['current_username']);
+        $user = validate($_GET['current_username']);
 
         
         $followcurrentuser = "SELECT userfollowing FROM followuser WHERE followeduser = '$user'"; //following current user
@@ -82,6 +82,6 @@
             echo json_encode($message);
         }
     }else{
-        header("Location: ../Login.php");
+        http_response_code(405);
     }
 ?>

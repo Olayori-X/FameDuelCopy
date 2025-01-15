@@ -1,4 +1,5 @@
 <?php
+session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -32,15 +33,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $row = mysqli_fetch_assoc($SQLpass);
             $userid = $row['userid'];
 
-            if($row['verified'] === true){
-                if($row['Password'] === $password){
+            if($row['verified'] == true){
+                if($row['password'] === $password){
                     unset($row['password']);
                     unset($row['id']);
 
                     $data = $row['userid'];
                     $response = [
                         'response' => "successful",
-                        'userid' => $data
+                        'userid' => $data,
+                        'accessToken' => session_id()
                     ];
 
                 }else{	

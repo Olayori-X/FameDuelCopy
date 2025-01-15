@@ -10,17 +10,27 @@
         $userid = validate($values['userid']);
       
 
-        $isinvited = "SELECT * FROM othercontests WHERE inviteename = '$userid' AND accepted = false";
-        $invitequery = mysqli_query($connect, $isinvited);
-    
-        if($invitequery){
-            $invites = [];
-            while($row = mysqli_fetch_assoc($invitequery)){
-                $invites[] = $row;
-            }
+        if(verifyToken()){
+            $isinvited = "SELECT * FROM othercontests WHERE inviteename = '$userid' AND accepted = false";
+            $invitequery = mysqli_query($connect, $isinvited);
+        
+            if($invitequery){
+                $invites = [];
+                while($row = mysqli_fetch_assoc($invitequery)){
+                    $invites[] = $row;
+                }
 
-            header("Content-Type: application/json");
-            echo json_encode($invites);
+                header("Content-Type: application/json");
+                echo json_encode($invites);
+            }
+        }else{
+            http_response_code(401);
+            $message = [
+                "message" => "You don't have the necessary permission to access this resource"
+            ];
+            echo json_encode($message);
         }
+    }else{
+        http_response_code(405);
     }
 ?>
